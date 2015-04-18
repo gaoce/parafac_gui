@@ -6,3 +6,6 @@ result/
 
 # Distribution
 dist/
+
+# Temporary mat file
+temp.mat

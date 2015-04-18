@@ -107,7 +107,6 @@ data = guidata(hObject);
 numEx = data.numEx;
 numEm = data.numEm;
 
-
 % Get experiment data
 [fileNames,pathName,~] = uigetfile('.txt', 'MultiSelect', 'on');
 expEEM = buildTensor(fileNames, pathName, numEm, numEx);
@@ -440,11 +439,35 @@ function plot_intensity_Callback(hObject, eventdata, handles)
 % Get data
 data = guidata(hObject);
 
+% Get peak values
+minEm = min(data.normEEM.Em);
+maxEm = max(data.normEEM.Em);
+minEx = min(data.normEEM.Ex);
+maxEx = max(data.normEEM.Ex);
+
+promptEm = sprintf('Peak Em [%.1f, %1.f]', minEm, maxEm);
+promptEx = sprintf('Peak Ex [%.1f, %1.f]', minEx, maxEx);
+prompt = {promptEm, promptEx};
+dlg_title = 'Input';
+num_lines = 1;
+while 1
+    answer = inputdlg(prompt, dlg_title, num_lines);
+
+    peakEm = str2double(answer{1});
+    peakEx = str2double(answer{2});
+    
+    if ~isnan(peakEm) && ~isnan(peakEx) && peakEm > 0 && peakEx > 0;
+        break;
+    else
+        waitfor(errordlg('Invalid input, must be a positive number'));
+    end
+end
+
 % Get path
 outPath = uigetdir();
 
 % Plot data
-plotIntensity(data.normEEM, outPath);
+plotPeak(data.normEEM, peakEm, peakEx, outPath );
 
 msgbox('Plotting completed!');
 
@@ -603,6 +626,31 @@ function plot_comp_intensity_Callback(hObject, eventdata, handles)
 % Get data
 data = guidata(hObject);
 
+
+% Get peak values
+minEm = min(data.normEEM.Em);
+maxEm = max(data.normEEM.Em);
+minEx = min(data.normEEM.Ex);
+maxEx = max(data.normEEM.Ex);
+
+promptEm = sprintf('Peak Em [%.1f, %1.f]', minEm, maxEm);
+promptEx = sprintf('Peak Ex [%.1f, %1.f]', minEx, maxEx);
+prompt = {promptEm, promptEx};
+dlg_title = 'Input';
+num_lines = 1;
+while 1
+    answer = inputdlg(prompt, dlg_title, num_lines);
+
+    peakEm = str2double(answer{1});
+    peakEx = str2double(answer{2});
+    
+    if ~isnan(peakEm) && ~isnan(peakEx) && peakEm > 0 && peakEx > 0;
+        break;
+    else
+        waitfor(errordlg('Invalid input, must be a positive number'));
+    end
+end
+
 % Alias
 factsCP = data.factsCP;
 
@@ -629,7 +677,10 @@ for i = 1:numComp
         decompEEM.X = nmodel({factsCP{1}(:,i),factsCP{2}(:,i),factsCP{3}(:,i)});
         data.(decompName) = decompEEM;        
     end
-    plotIntensity(decompEEM, [outPath, '/', newDir]);
+    
+    % Plot data
+    plotPeak(decompEEM, peakEm, peakEx, [outPath, '/', newDir]);
+  
     uicontrol(hObject);
 end
 

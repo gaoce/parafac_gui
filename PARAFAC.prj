@@ -1,0 +1,123 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<deployment-project plugin="plugin.apptool" plugin-version="1.0">
+  <configuration target="target.mlapps" target-name="Package App" name="PARAFAC" location="C:\workspace\matlab\parafac_gui" file="C:\workspace\matlab\parafac_gui\PARAFAC.prj" build-checksum="2164443721">
+    <param.appname>PARAFAC</param.appname>
+    <param.authnamewatermark>Ce Gao</param.authnamewatermark>
+    <param.email>gaoce@coe.neu.edu</param.email>
+    <param.company>Northeastern University</param.company>
+    <param.icon>${PROJECT_ROOT}\PARAFAC_24.png</param.icon>
+    <param.summary>A GUI to conduct PARAFAC.</param.summary>
+    <param.description>A GUI application for PARAFAC that can be installed in MATLAB. This app will help decompose fluorescence excitation–emission matrix (EEM) spectroscopy data and export corresponding plots.</param.description>
+    <param.screenshot>${PROJECT_ROOT}\screenshot.png</param.screenshot>
+    <param.version>3.2</param.version>
+    <param.products.name>
+      <item>Statistics Toolbox</item>
+      <item>MATLAB</item>
+      <item>Image Processing Toolbox</item>
+    </param.products.name>
+    <param.products.id>
+      <item>19</item>
+      <item>1</item>
+      <item>17</item>
+    </param.products.id>
+    <param.products.version>
+      <item>8.2</item>
+      <item>8.1</item>
+      <item>8.2</item>
+    </param.products.version>
+    <param.platforms />
+    <param.output>${PROJECT_ROOT}\dist\PARAFAC.mlappinstall</param.output>
+    <param.guid>862bfbc9-d23c-4d6d-8b9f-7177da4edfac</param.guid>
+    <unset>
+      <param.platforms />
+    </unset>
+    <fileset.main>
+      <file>${PROJECT_ROOT}\main.m</file>
+    </fileset.main>
+    <fileset.depfun>
+      <file>${PROJECT_ROOT}\configPath.m</file>
+      <file>${PROJECT_ROOT}\lib\DOMFluor\EEMCut.m</file>
+      <file>${PROJECT_ROOT}\lib\DOMFluor\nway\calcore.m</file>
+      <file>${PROJECT_ROOT}\lib\DOMFluor\nway\ckron.m</file>
+      <file>${PROJECT_ROOT}\lib\DOMFluor\nway\complpol.m</file>
+      <file>${PROJECT_ROOT}\lib\DOMFluor\nway\corcond.m</file>
+      <file>${PROJECT_ROOT}\lib\DOMFluor\nway\dtld.m</file>
+      <file>${PROJECT_ROOT}\lib\DOMFluor\nway\fac2let.m</file>
+      <file>${PROJECT_ROOT}\lib\DOMFluor\nway\fastnnls.m</file>
+      <file>${PROJECT_ROOT}\lib\DOMFluor\nway\fnipals.m</file>
+      <file>${PROJECT_ROOT}\lib\DOMFluor\nway\getindxn.m</file>
+      <file>${PROJECT_ROOT}\lib\DOMFluor\nway\gram.m</file>
+      <file>${PROJECT_ROOT}\lib\DOMFluor\nway\gsm.m</file>
+      <file>${PROJECT_ROOT}\lib\DOMFluor\nway\ini.m</file>
+      <file>${PROJECT_ROOT}\lib\DOMFluor\nway\inituck.m</file>
+      <file>${PROJECT_ROOT}\lib\DOMFluor\nway\krb.m</file>
+      <file>${PROJECT_ROOT}\lib\DOMFluor\nway\missmean.m</file>
+      <file>${PROJECT_ROOT}\lib\DOMFluor\nway\missmult.m</file>
+      <file>${PROJECT_ROOT}\lib\DOMFluor\nway\misssum.m</file>
+      <file>${PROJECT_ROOT}\lib\DOMFluor\nway\monreg.m</file>
+      <file>${PROJECT_ROOT}\lib\DOMFluor\nway\ncosine.m</file>
+      <file>${PROJECT_ROOT}\lib\DOMFluor\nway\neye.m</file>
+      <file>${PROJECT_ROOT}\lib\DOMFluor\nway\nident.m</file>
+      <file>${PROJECT_ROOT}\lib\DOMFluor\nway\nmodel.m</file>
+      <file>${PROJECT_ROOT}\lib\DOMFluor\nway\nonneg.m</file>
+      <file>${PROJECT_ROOT}\lib\DOMFluor\nway\normit.m</file>
+      <file>${PROJECT_ROOT}\lib\DOMFluor\nway\nsetdiff.m</file>
+      <file>${PROJECT_ROOT}\lib\DOMFluor\nway\nshape.m</file>
+      <file>${PROJECT_ROOT}\lib\DOMFluor\nway\parafac.m</file>
+      <file>${PROJECT_ROOT}\lib\DOMFluor\nway\pfls.m</file>
+      <file>${PROJECT_ROOT}\lib\DOMFluor\nway\pfplot.m</file>
+      <file>${PROJECT_ROOT}\lib\DOMFluor\nway\pftest.m</file>
+      <file>${PROJECT_ROOT}\lib\DOMFluor\nway\stdnan.m</file>
+      <file>${PROJECT_ROOT}\lib\DOMFluor\nway\t3core.m</file>
+      <file>${PROJECT_ROOT}\lib\DOMFluor\nway\tucker.m</file>
+      <file>${PROJECT_ROOT}\lib\DOMFluor\nway\ulsr.m</file>
+      <file>${PROJECT_ROOT}\lib\DOMFluor\nway\unimodal.m</file>
+      <file>${PROJECT_ROOT}\lib\export_fig\copyfig.m</file>
+      <file>${PROJECT_ROOT}\lib\export_fig\eps2pdf.m</file>
+      <file>${PROJECT_ROOT}\lib\export_fig\export_fig.m</file>
+      <file>${PROJECT_ROOT}\lib\export_fig\fix_lines.m</file>
+      <file>${PROJECT_ROOT}\lib\export_fig\ghostscript.m</file>
+      <file>${PROJECT_ROOT}\lib\export_fig\isolate_axes.m</file>
+      <file>${PROJECT_ROOT}\lib\export_fig\pdf2eps.m</file>
+      <file>${PROJECT_ROOT}\lib\export_fig\pdftops.m</file>
+      <file>${PROJECT_ROOT}\lib\export_fig\print2array.m</file>
+      <file>${PROJECT_ROOT}\lib\export_fig\print2eps.m</file>
+      <file>${PROJECT_ROOT}\lib\export_fig\user_string.m</file>
+      <file>${PROJECT_ROOT}\lib\FastPeakFind\FastPeakFind.m</file>
+      <file>${PROJECT_ROOT}\lib\gui\buildTensor.m</file>
+      <file>${PROJECT_ROOT}\lib\gui\normEEM.m</file>
+      <file>${PROJECT_ROOT}\lib\gui\plotContour.m</file>
+      <file>${PROJECT_ROOT}\lib\gui\plotIntensity.m</file>
+      <file>${PROJECT_ROOT}\lib\rotateXLabels\rotateXLabels.m</file>
+      <file>${PROJECT_ROOT}\main.fig</file>
+    </fileset.depfun>
+    <fileset.resources />
+    <fileset.package />
+    <build-deliverables>
+      <file name="PARAFAC.mlappinstall" location="${PROJECT_ROOT}\dist" optional="false">C:\workspace\matlab\parafac_gui\dist\PARAFAC.mlappinstall</file>
+    </build-deliverables>
+    <workflow />
+    <matlab>
+      <root>C:\Program Files\MATLAB\R2013a</root>
+      <toolboxes>
+        <toolbox name="fixedpoint" />
+      </toolboxes>
+    </matlab>
+    <platform>
+      <unix>false</unix>
+      <mac>false</mac>
+      <windows>true</windows>
+      <win2k>false</win2k>
+      <winxp>false</winxp>
+      <vista>false</vista>
+      <linux>false</linux>
+      <solaris>false</solaris>
+      <osver>6.1</osver>
+      <os32>false</os32>
+      <os64>true</os64>
+      <arch>win64</arch>
+      <matlab>true</matlab>
+    </platform>
+  </configuration>
+</deployment-project>
+

@@ -1,5 +1,8 @@
 # Data file
-data
+data/
+
+# Sample results
+result/
 
 # Distribution
-dist
+dist/

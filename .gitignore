@@ -1,11 +1,11 @@
 # Data file
-./data
+data
 
 # Distribution
-./dist
+dist
 
 # External lib
-./lib/DOMFluor
-./lib/export_fig
-./lib/FastPeakFind
-./lib/rotateXLabels
+lib/DOMFluor
+lib/export_fig
+lib/FastPeakFind
+lib/rotateXLabels

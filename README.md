@@ -10,4 +10,4 @@ A GUI to conduct PARAFAC.
 
 2. While package app, the following files need to be included as private data
   * .mat files in nway toolbox inside DOMFLour
-  * .nopt* files in export_fig
+  * .ignore folder and files inside in export_fig

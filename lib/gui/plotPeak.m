@@ -32,6 +32,6 @@ xlim([0 normEEM.nSample+1]);
 
 set(fh,'color','w','Position',[50 50 1000 500]);
 
-fileName = sprintf('%s/intensity_Ex_%d_Em_%d.pdf', outPath, realPeakEx, realPeakEm);
+fileName = sprintf('%s/intensity_Em_%d_Ex_%d.pdf', outPath, realPeakEm, realPeakEx);
 export_fig(fileName);
 close(fh);

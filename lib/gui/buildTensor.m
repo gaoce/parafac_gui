@@ -27,10 +27,10 @@ for i = 1:numSample
     fileName = [pathName, '/', fileNames{i}];
     
     % Get sample name, namely file name excluding extension
-    [~,name,~] = fileparts(fileName);
+    [~, name, ~] = fileparts(fileName);
     
     % Get data
-    [mat, Ex, Em] = getMat(fileName);
+    [mat, Em, Ex] = getIntensityMatrix(fileName, numEx);
     
     X(i,:,:) = mat;
     Sample{i} = name;
@@ -47,21 +47,31 @@ EEMData.Sample = Sample;
 end
 
 
-function [mat, Ex, Em] = getMat(fileName)
+function [mat, Em, Ex] = getIntensityMatrix(fileName, numEx)
+% The backstage hero: read the file and extract intensity matrix and
+% wavelengths used in the experiment
+% Arguments:
+%   fileName: name of input data
+%   numEx: number of ex wavelength
+% Returns:
+%   mat: intensity matrix
+%   Em: emission wavelengths
+%   Ex: exciation wavelengths
 
 % Open file
 fid = fopen(fileName);
 
-formSpec = ['%s\t', repmat('%f\t', 1, 47)];
+% Read the fourth line (because the first 3 are header lines)
+formSpec = ['%s\t', repmat('%f\t', 1, numEx)];
 C = textscan(fid, formSpec, 1, 'CollectOutput', 1, 'HeaderLines', 3);
-Ex = C{2}(:);
+Ex = C{2}(:); % Excitation wavelengths
 
-formSpec = [repmat('%f\t', 1, 47), '%f'];
+% Read the remaining lines
+formSpec = [repmat('%f\t', 1, numEx), '%f'];
 C = textscan(fid, formSpec, 'CollectOutput', 1);
 
-Em = C{1}(:,1);
-mat = C{1}(:,2:end);
+Em = C{1}(:,1); % Emission wavelengths
+mat = C{1}(:,2:end); % intensity matrix
 
 fclose(fid);
-
 end

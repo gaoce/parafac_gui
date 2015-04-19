@@ -13,3 +13,7 @@ A GUI to conduct PARAFAC.
   * .ignore folder and files inside in export_fig
 
 3. The plotting functionality requires [ghostscript](http://www.ghostscript.com/)
+4. For developers only
+  * It is **really** easy to get confused with Em and Ex, so I follow the rule that
+    Em always comes first when they are together. For example, the signature of the 
+    function: `EEMData = buildTensor(fileNames, pathName, numEm, numEx)`

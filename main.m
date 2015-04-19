@@ -22,7 +22,7 @@ function varargout = main(varargin)
 
 % Edit the above text to modify the response to help main
 
-% Last Modified by GUIDE v2.5 17-Apr-2015 21:55:10
+% Last Modified by GUIDE v2.5 18-Apr-2015 22:38:35
 
 % Begin initialization code - DO NOT EDIT
 gui_Singleton = 1;
@@ -79,9 +79,11 @@ handles.output = hObject;
 % Update handles structure
 guidata(hObject, handles);
 
+% Center the gui in the center of the screen
+movegui(gcf,'center');
+
 % UIWAIT makes main wait for user response (see UIRESUME)
 % uiwait(handles.figure1);
-
 
 % --- Outputs from this function are returned to the command line.
 function varargout = main_OutputFcn(hObject, eventdata, handles) 
@@ -94,20 +96,21 @@ function varargout = main_OutputFcn(hObject, eventdata, handles)
 varargout{1} = handles.output;
 
 
-% --- Executes on button press in input_exp.
-function input_exp_Callback(hObject, eventdata, handles)
-% hObject    handle to input_exp (see GCBO)
+% --- Executes on button press in inputExp.
+function inputExp_Callback(hObject, eventdata, handles)
+% hObject    handle to inputExp (see GCBO)
 % eventdata  reserved - to be defined in a future version of MATLAB
 % handles    structure with handles and user data (see GUIDATA)
 
 % Get data
 data = guidata(hObject);
 
-% Get numEx, numEm
+% Get numEx, numEx
 numEx = data.numEx;
 numEm = data.numEm;
 
 % Get experiment data
+% EEM stands for ex em matrix
 [fileNames,pathName,~] = uigetfile('.txt', 'MultiSelect', 'on');
 expEEM = buildTensor(fileNames, pathName, numEm, numEx);
 
@@ -125,15 +128,11 @@ guidata(hObject, data);
 
 % Disable normalization and its flag when new data is imported
 set(findobj('Tag', 'normFlag'), 'String', '');
-% if no background data is available
-% if data.bg ~= 1
-%     set(findobj('Tag', 'normalize'), 'Enable', 'off');
-% end
 
 % Enable input background and plotting
-set(findobj('Tag', 'input_bg'), 'Enable', 'on');
-set(findobj('Tag', 'plot_contour'), 'Enable', 'on');
-set(findobj('Tag', 'plot_intensity'), 'Enable', 'on');
+set(findobj('Tag', 'inputBg'), 'Enable', 'on');
+set(findobj('Tag', 'plotContour'), 'Enable', 'on');
+set(findobj('Tag', 'plotPeak'), 'Enable', 'on');
 
 % If the parameters allow, enable pftest
 if checkTagNum('numIter') ~= 0 && checkTagNum('numMaxFac') ~= 0
@@ -141,9 +140,9 @@ if checkTagNum('numIter') ~= 0 && checkTagNum('numMaxFac') ~= 0
 end
 set(findobj('Tag', 'numFac'), 'Enable', 'on');
 
-% --- Executes on button press in input_bg.
-function input_bg_Callback(hObject, eventdata, handles)
-% hObject    handle to input_bg (see GCBO)
+% --- Executes on button press in inputBg.
+function inputBg_Callback(hObject, eventdata, handles)
+% hObject    handle to inputBg (see GCBO)
 % eventdata  reserved - to be defined in a future version of MATLAB
 % handles    structure with handles and user data (see GUIDATA)
 % Get experiment data
@@ -152,18 +151,13 @@ function input_bg_Callback(hObject, eventdata, handles)
 data = guidata(hObject);
 
 % TODO
-% Get numEx, numEm
-% numEx = data.numEx;
-% numEm = data.numEm;
-numEx = 47;
-numEm = 361;
+% Get numEm, numEx
+numEm = data.numEm;
+numEx = data.numEx;
 
 % Get background file
 [fileNames,pathName,~] = uigetfile('.txt', 'MultiSelect', 'on');
-bgEEM = buildTensor(fileNames, pathName, numEm, numEx);
-
-% Save a copy of original EEM data
-data.bgEEM = bgEEM;
+data.bgEEM = buildTensor(fileNames, pathName, numEm, numEx);
 
 % Set a flag for background data
 data.bg = 1;
@@ -195,9 +189,9 @@ set(findobj('Tag', 'normFlag'), 'String', 'Data Normalized!');
 % Update
 guidata(hObject,data);
 
-% --- Executes on button press in plot_contour.
-function plot_contour_Callback(hObject, eventdata, handles)
-% hObject    handle to plot_contour (see GCBO)
+% --- Executes on button press in plotContour.
+function plotContour_Callback(hObject, eventdata, handles)
+% hObject    handle to plotContour (see GCBO)
 % eventdata  reserved - to be defined in a future version of MATLAB
 % handles    structure with handles and user data (see GUIDATA)
 
@@ -205,14 +199,18 @@ function plot_contour_Callback(hObject, eventdata, handles)
 data = guidata(hObject);
 
 % Get path
-outPath = uigetdir();
+outPath = uigetdir('.', 'Selection location');
 
-% TODO
-% check if outPath is NA
+% Abort if no path is selected
+if outPath == 0
+    waitfor(msgbox('Invalid path!'));
+    return
+end
 
 % Plot data
 plotContour(data.normEEM, 'RU', outPath);
 
+% Get a success signal
 msgbox('Plotting completed!');
 
 
@@ -228,23 +226,28 @@ function numEx_Callback(hObject, eventdata, handles)
 % Get data
 data = guidata(hObject);
 
-% Store the data
+% Extract the data
 numEx = getNum(hObject);
+
+% Determine which btns should be enabled
 if numEx == 0
+    % Got an invlid data
     set(findobj('Tag', 'numEm'), 'Enable', 'off');
-    set(findobj('Tag', 'input_exp'), 'Enable', 'off');
-    set(findobj('Tag', 'input_bg'), 'Enable', 'off');
+    set(findobj('Tag', 'inputExp'), 'Enable', 'off');
+    set(findobj('Tag', 'inputBg'), 'Enable', 'off');
     return
 else
-    data.numEx = numEx;
+    % Got valid data
     set(findobj('Tag', 'numEm'), 'Enable', 'on');
     if checkTagNum('numEm') ~= 0
-        set(findobj('Tag', 'input_exp'), 'Enable', 'on');
-        set(findobj('Tag', 'input_bg'), 'Enable', 'on');
+        % If numEm is also valid
+        set(findobj('Tag', 'inputExp'), 'Enable', 'on');
+        set(findobj('Tag', 'inputBg'), 'Enable', 'on');
     end
 end
 
 % Update
+data.numEx = numEx;
 guidata(hObject,data);
 
 
@@ -267,35 +270,38 @@ function numEm_Callback(hObject, eventdata, handles)
 % eventdata  reserved - to be defined in a future version of MATLAB
 % handles    structure with handles and user data (see GUIDATA)
 
-% Hints: get(hObject,'String') returns contents of numEm as text
-%        str2double(get(hObject,'String')) returns contents of numEm as a double
+% Hints: get(hObject,'String') returns contents of numEx as text
+%        str2double(get(hObject,'String')) returns contents of numEx as a double
 
 % Get data
 data = guidata(hObject);
 
-% Store the data
+% Extract the data
 numEm = getNum(hObject);
+
+% Determine the which btns should be enabled
 if numEm == 0
     set(findobj('Tag', 'numEx'), 'Enable', 'off');
-    set(findobj('Tag', 'input_exp'), 'Enable', 'off');
-    set(findobj('Tag', 'input_bg'), 'Enable', 'off');
+    set(findobj('Tag', 'inputExp'), 'Enable', 'off');
+    set(findobj('Tag', 'inputBg'), 'Enable', 'off');
     return
 else
-    data.numEm = numEm;
     set(findobj('Tag', 'numEx'), 'Enable', 'on');
     if checkTagNum('numEx') ~= 0
-        set(findobj('Tag', 'input_exp'), 'Enable', 'on');
-        set(findobj('Tag', 'input_bg'), 'Enable', 'on');
+        set(findobj('Tag', 'inputExp'), 'Enable', 'on');
+        set(findobj('Tag', 'inputBg'), 'Enable', 'on');
     end
 end
 
-% Update
+    
+% Update data
+data.numEm = numEm;
 guidata(hObject,data);
 
 
 % --- Executes during object creation, after setting all properties.
 function numEm_CreateFcn(hObject, eventdata, handles)
-% hObject    handle to numEm (see GCBO)
+% hObject    handle to numEx (see GCBO)
 % eventdata  reserved - to be defined in a future version of MATLAB
 % handles    empty - handles not created until after all CreateFcns called
 
@@ -430,9 +436,9 @@ data = guidata(hObject);
     [0 0 0 0 NaN]);
 
 
-% --- Executes on button press in plot_intensity.
-function plot_intensity_Callback(hObject, eventdata, handles)
-% hObject    handle to plot_intensity (see GCBO)
+% --- Executes on button press in plotPeak.
+function plotPeak_Callback(hObject, eventdata, handles)
+% hObject    handle to plotPeak (see GCBO)
 % eventdata  reserved - to be defined in a future version of MATLAB
 % handles    structure with handles and user data (see GUIDATA)
 
@@ -442,6 +448,7 @@ data = guidata(hObject);
 % Get peak values
 minEm = min(data.normEEM.Em);
 maxEm = max(data.normEEM.Em);
+
 minEx = min(data.normEEM.Ex);
 maxEx = max(data.normEEM.Ex);
 
@@ -450,12 +457,19 @@ promptEx = sprintf('Peak Ex [%.1f, %1.f]', minEx, maxEx);
 prompt = {promptEm, promptEx};
 dlg_title = 'Input';
 num_lines = 1;
+
+% Loop until get a statisfying result
 while 1
     answer = inputdlg(prompt, dlg_title, num_lines);
-
+    
+    % The user cancled without input
+    if isempty(answer)
+        return
+    end
     peakEm = str2double(answer{1});
     peakEx = str2double(answer{2});
     
+    % check if the values are ok
     if ~isnan(peakEm) && ~isnan(peakEx) && peakEm > 0 && peakEx > 0;
         break;
     else
@@ -464,11 +478,18 @@ while 1
 end
 
 % Get path
-outPath = uigetdir();
+outPath = uigetdir('.', 'Selection location');
+
+% Abort if no path is selected
+if outPath == 0
+    waitfor(msgbox('Invalid path!'));
+    return
+end
 
 % Plot data
-plotPeak(data.normEEM, peakEm, peakEx, outPath );
+plotPeak(data.normEEM, peakEm, peakEx, outPath);
 
+% Success
 msgbox('Plotting completed!');
 
 
@@ -494,8 +515,8 @@ data.decompose = 1;
 guidata(hObject,data);
 
 % Enable plotting
-set(findobj('Tag', 'plot_comp_contour'), 'Enable', 'on');
-set(findobj('Tag', 'plot_comp_intensity'), 'Enable', 'on');
+set(findobj('Tag', 'plotCompContour'), 'Enable', 'on');
+set(findobj('Tag', 'plotCompPeak'), 'Enable', 'on');
 
 msgbox('Decomposition completed!');
 
@@ -539,16 +560,16 @@ data = guidata(hObject);
 numFac = getNum(hObject);
 if numFac == 0
     set(findobj('Tag', 'decompose'), 'Enable', 'off');
-    set(findobj('Tag', 'plot_comp_contour'), 'Enable', 'off');
-    set(findobj('Tag', 'plot_comp_intensity'), 'Enable', 'off');
+    set(findobj('Tag', 'plotCompContour'), 'Enable', 'off');
+    set(findobj('Tag', 'plotCompPeak'), 'Enable', 'off');
     % Wrong number, must re-do the decomposition
     data.decompose = 0;
 else
     data.numFac = numFac;    
     set(findobj('Tag', 'decompose'), 'Enable', 'on');
     if data.decompose == 1
-        set(findobj('Tag', 'plot_comp_contour'), 'Enable', 'on');
-        set(findobj('Tag', 'plot_comp_intensity'), 'Enable', 'on');
+        set(findobj('Tag', 'plotCompContour'), 'Enable', 'on');
+        set(findobj('Tag', 'plotCompPeak'), 'Enable', 'on');
     end
 end
 
@@ -569,9 +590,9 @@ if ispc && isequal(get(hObject,'BackgroundColor'), get(0,'defaultUicontrolBackgr
 end
 
 
-% --- Executes on button press in plot_comp_contour.
-function plot_comp_contour_Callback(hObject, eventdata, handles)
-% hObject    handle to plot_comp_contour (see GCBO)
+% --- Executes on button press in plotCompContour.
+function plotCompContour_Callback(hObject, eventdata, handles)
+% hObject    handle to plotCompContour (see GCBO)
 % eventdata  reserved - to be defined in a future version of MATLAB
 % handles    structure with handles and user data (see GUIDATA)
 
@@ -585,9 +606,9 @@ factsCP = data.factsCP;
 numComp = size(data.factsCP{1}, 2);
 
 % Get output dir
-outPath = uigetdir();
+outPath = uigetdir('.', 'Selection location');
 if outPath == 0
-    waitfor(msgbox(['Invalid path!']));
+    waitfor(msgbox('Invalid path!'));
     return
 end
 
@@ -618,14 +639,14 @@ guidata(hObject,data);
 uicontrol(hObject);
 msgbox('Plotting completed!');
 
-% --- Executes on button press in plot_comp_intensity.
-function plot_comp_intensity_Callback(hObject, eventdata, handles)
-% hObject    handle to plot_comp_intensity (see GCBO)
+% --- Executes on button press in plotCompPeak.
+function plotCompPeak_Callback(hObject, eventdata, handles)
+% hObject    handle to plotCompPeak (see GCBO)
 % eventdata  reserved - to be defined in a future version of MATLAB
 % handles    structure with handles and user data (see GUIDATA)
+
 % Get data
 data = guidata(hObject);
-
 
 % Get peak values
 minEm = min(data.normEEM.Em);
@@ -658,9 +679,9 @@ factsCP = data.factsCP;
 numComp = size(data.factsCP{1}, 2);
 
 % Get output dir
-outPath = uigetdir();
+outPath = uigetdir('.', 'Selection location');
 if outPath == 0
-    waitfor(msgbox(['Invalid path!']));
+    waitfor(msgbox('Invalid path!'));
     return
 end
 

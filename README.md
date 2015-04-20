@@ -29,3 +29,6 @@ A GUI to conduct PARAFAC for spectroscopy data.
   * It is **really** easy to get confused with Em and Ex, so I follow the rule that
     Em always comes first when they are together. For example, the signature of the
     function: `EEMData = buildTensor(fileNames, pathName, numEm, numEx)`
+
+5. Screenshot
+![screenshot](/screenshot.png)

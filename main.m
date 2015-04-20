@@ -43,28 +43,6 @@ else
 end
 % End initialization code - DO NOT EDIT
 
-%% Configure path ==============================================================
-% Developer only: change the path of he following toolboxes in case they
-% are relocated or renamed
-
-% DOMFLour
-addpath('./lib/DOMFluor/');
-addpath('./lib/DOMFluor/nway/');
-
-% export_fig 
-addpath('./lib/export_fig/');
-
-% FastPeakFind
-addpath('./lib/FastPeakFind/');
-
-% RotateXLabels
-addpath('./lib/rotateXLabels/');
-
-% Our code
-addpath('./lib/gui/');
-% ==============================================================================
-
-
 %% --- Executes just before main is made visible.
 function main_OpeningFcn(hObject, eventdata, handles, varargin)
 % This function has no output args, see OutputFcn.

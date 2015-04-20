@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <deployment-project plugin="plugin.apptool" plugin-version="1.0">
-  <configuration target="target.mlapps" target-name="Package App" name="PARAFAC" location="C:\workspace\parafac" file="C:\workspace\parafac\PARAFAC.prj" build-checksum="1634822480">
+  <configuration target="target.mlapps" target-name="Package App" name="PARAFAC" location="C:\workspace\parafac" file="C:\workspace\parafac\PARAFAC.prj" build-checksum="1714065576">
     <param.appname>PARAFAC</param.appname>
     <param.authnamewatermark>Ce Gao</param.authnamewatermark>
     <param.email />
@@ -9,16 +9,16 @@
     <param.summary>A GUI to conduct PARAFAC.</param.summary>
     <param.description>A GUI application for PARAFAC that can be installed in MATLAB. This app will help decompose fluorescence excitation–emission matrix (EEM) spectroscopy data and export corresponding plots.</param.description>
     <param.screenshot>${PROJECT_ROOT}\screenshot.png</param.screenshot>
-    <param.version>3.5.1</param.version>
+    <param.version>3.5.2</param.version>
     <param.products.name>
-      <item>Image Processing Toolbox</item>
-      <item>MATLAB</item>
       <item>Statistics Toolbox</item>
+      <item>MATLAB</item>
+      <item>Image Processing Toolbox</item>
     </param.products.name>
     <param.products.id>
-      <item>17</item>
-      <item>1</item>
       <item>19</item>
+      <item>1</item>
+      <item>17</item>
     </param.products.id>
     <param.products.version>
       <item>8.2</item>
@@ -85,12 +85,12 @@
       <file>${PROJECT_ROOT}\lib\export_fig\print2eps.m</file>
       <file>${PROJECT_ROOT}\lib\export_fig\user_string.m</file>
       <file>${PROJECT_ROOT}\lib\FastPeakFind\FastPeakFind.m</file>
-      <file>${PROJECT_ROOT}\lib\gui\buildTensor.m</file>
-      <file>${PROJECT_ROOT}\lib\gui\normEEM.m</file>
-      <file>${PROJECT_ROOT}\lib\gui\plotContour.m</file>
-      <file>${PROJECT_ROOT}\lib\gui\plotPeak.m</file>
       <file>${PROJECT_ROOT}\lib\rotateXLabels\rotateXLabels.m</file>
       <file>${PROJECT_ROOT}\main.fig</file>
+      <file>${PROJECT_ROOT}\src\gui\buildTensor.m</file>
+      <file>${PROJECT_ROOT}\src\gui\normEEM.m</file>
+      <file>${PROJECT_ROOT}\src\gui\plotContour.m</file>
+      <file>${PROJECT_ROOT}\src\gui\plotPeak.m</file>
     </fileset.depfun>
     <fileset.resources>
       <file>${PROJECT_ROOT}\lib\DOMFluor\nway\def.mat</file>

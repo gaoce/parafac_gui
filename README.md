@@ -1,8 +1,8 @@
-parafac_gui
-===========
-A GUI to conduct PARAFAC.
+PARAFAC Toolbox
+===============
+A GUI to conduct PARAFAC for spectroscopy data.
 
-0. This app requires MATLAB version 2012b and later.
+0. This app requires MATLAB version 2012b or later.
 
 1. The following packages or toolboxes are used
   * [DOMFLuor](http://www.models.life.ku.dk/al_domfluor)
@@ -16,7 +16,8 @@ A GUI to conduct PARAFAC.
 
 3. For developer
   0. Run `configPath.m` before anything
-  1. Click `Package App` under `APPS` tab
+  1. To start from new: click `Package App` under `APPS` tab; or just double
+     click `PARAFAC.prj`
   2. In the upper left corner, add `main.m` as main file
   3. Click `Refresh` in `Files included through analysis` section
   4. In `Shared resources and helper files` section, add the following files

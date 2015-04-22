@@ -2,7 +2,7 @@
 data/
 
 # Sample results
-result/
+result*/
 
 # Distribution
 dist/

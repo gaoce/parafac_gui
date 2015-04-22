@@ -89,7 +89,26 @@ numEm = data.numEm;
 
 % Get experiment data
 % EEM stands for ex em matrix
-[fileNames,pathName,~] = uigetfile('.txt', 'MultiSelect', 'on');
+[fileNames, pathName,~] = uigetfile('.txt', 'MultiSelect', 'on');
+
+% Check file names
+if ~iscell(fileNames)
+    if ischar(fileNames)
+        % Single file ??
+        fileNames = {fileNames};
+    elseif fileNames == 0
+        % The user cancels the select, quit quitely
+        % TODO: there should be a function to do this
+        set(findobj('Tag', 'inputBg'), 'Enable', 'off');
+        set(findobj('Tag', 'normalize'), 'Enable', 'off');
+        set(findobj('Tag', 'plotContour'), 'Enable', 'off');
+        set(findobj('Tag', 'plotPeak'), 'Enable', 'off');
+        return
+    else
+        disp('If you see these msg, please email author');
+    end
+end
+
 expEEM = buildTensor(fileNames, pathName, numEm, numEx);
 
 % Save a copy of original EEM data
@@ -128,13 +147,28 @@ function inputBg_Callback(hObject, eventdata, handles)
 % Get data
 data = guidata(hObject);
 
-% TODO
 % Get numEm, numEx
 numEm = data.numEm;
 numEx = data.numEx;
 
 % Get background file
-[fileNames,pathName,~] = uigetfile('.txt', 'MultiSelect', 'on');
+[fileNames, pathName, ~] = uigetfile('.txt', 'MultiSelect', 'on');
+
+% Check file names
+if ~iscell(fileNames)
+    if ischar(fileNames)
+        % Single file ??
+        fileNames = {fileNames};
+    elseif fileNames == 0
+        % The user cancels the select, quit quitely
+        % TODO: there should be a function to do this
+        set(findobj('Tag', 'normalize'), 'Enable', 'off');
+        return
+    else
+        disp('If you see these msg, please email author');
+    end
+end
+
 data.bgEEM = buildTensor(fileNames, pathName, numEm, numEx);
 
 % Set a flag for background data
@@ -186,10 +220,11 @@ if outPath == 0
 end
 
 % Plot data
-plotContour(data.normEEM, 'RU', outPath);
+fhs = plotContour(data.normEEM, 'RU', outPath);
 
 % Get a success signal
-msgbox('Plotting completed!');
+waitfor(msgbox('Plotting completed! Close all Images?'));
+close(fhs);
 
 
 
@@ -465,10 +500,13 @@ if outPath == 0
 end
 
 % Plot data
-plotPeak(data.normEEM, peakEm, peakEx, outPath);
+fh = plotPeak(data.normEEM, peakEm, peakEx, outPath);
 
 % Success
-msgbox('Plotting completed!');
+% Get a success signal
+waitfor(msgbox('Plotting completed! Close all Images?'));
+close(fh);
+
 
 
 % --- Executes on button press in decompose.
@@ -606,8 +644,13 @@ for i = 1:numComp
         data.(decompName) = decompEEM;        
     end
     
-    plotContour(decompEEM, 'RU', [outPath, '/', newDir]);
+    fhs = plotContour(decompEEM, 'RU', [outPath, '/', newDir]);
     uicontrol(hObject);
+    
+    % Get a success signal
+    msg = sprintf('Comp %d plotting completed! Close all Images?', i);
+    waitfor(msgbox(msg));
+    close(fhs);
 end
 
 % Update
@@ -615,7 +658,6 @@ guidata(hObject,data);
 
 % Gain focus
 uicontrol(hObject);
-msgbox('Plotting completed!');
 
 % --- Executes on button press in plotCompPeak.
 function plotCompPeak_Callback(hObject, eventdata, handles)
@@ -678,8 +720,13 @@ for i = 1:numComp
     end
     
     % Plot data
-    plotPeak(decompEEM, peakEm, peakEx, [outPath, '/', newDir]);
-  
+    fh = plotPeak(decompEEM, peakEm, peakEx, [outPath, '/', newDir]);
+    
+    % Get a success signal
+    msg = sprintf('Comp %d plotting completed! Close all Images?', i);
+    waitfor(msgbox(msg));
+    close(fh);
+    
     uicontrol(hObject);
 end
 
@@ -688,4 +735,3 @@ guidata(hObject,data);
 
 % Gain focus
 uicontrol(hObject);
-msgbox('Plotting completed!');

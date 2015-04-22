@@ -1,4 +1,4 @@
-function plotPeak(normEEM, peakEm, peakEx, outPath)
+function fh = plotPeak(normEEM, peakEm, peakEx, outPath)
 %PLOTPEAK
 
 intensity = ones(normEEM.nSample,1);
@@ -18,7 +18,12 @@ end
 
 % maxIntensity = max(intensity);
 fh = figure('Visible','off');
+% Location and size
+set(fh,'color','w','Position',[50 50 600 600]);
 
+% Get Plot object early on
+plt = Plot();
+    
 bar(intensity);
 pos = get(gca,'Position');
 pos([2,4]) = [0.3, 0.6];
@@ -26,12 +31,14 @@ pos([2,4]) = [0.3, 0.6];
 % XTick  
 set(gca, 'XTickLabel', normEEM.Sample, 'Position', pos);
 rotateXLabels(gca,45);
-title('Peak 1');
 xlim([0 normEEM.nSample+1]);
+title(['Em: ', num2str(realPeakEm), ', Ex: ', num2str(realPeakEx)]);
 % ylim([0 maxIntensity]);
+   
+% Make it visible
+movegui(fh, 'center');
+set(fh, 'Visible', 'on');
 
-set(fh,'color','w','Position',[50 50 1000 500]);
-
+% Export figure
 fileName = sprintf('%s/intensity_Em_%d_Ex_%d.pdf', outPath, realPeakEm, realPeakEx);
-export_fig(fileName);
-close(fh);
+plt.export(fileName);

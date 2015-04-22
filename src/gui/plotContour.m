@@ -1,4 +1,4 @@
-function plotContour(normEEM, FlUnit, outPath)
+function fhs = plotContour(normEEM, FlUnit, outPath)
 %PlotEEMby1 Plots EEMs one at a time as contour plots. 
 %
 %INPUT: PlotEEMby1(sample,data,FlUnit);
@@ -23,27 +23,43 @@ function plotContour(normEEM, FlUnit, outPath)
 % 2014-06-20
 
 maxIntensity = max(normEEM.X(:));
-for i=1:normEEM.nSample
-    fh = figure();
-    clf;
-    set(fh,'Visible','off');
+
+% A vector containing all figure handles, so they can be closed
+fhs = zeros(1,normEEM.nSample);
+
+for i=1:normEEM.nSample    
+    % Make the figure invisible to move it around
+    fh = figure('Visible', 'off');
+    set(fh, 'color','w', 'position', [50 50 800 500]);
+    fhs(i) = fh;
+    
+    % Get Plot object early on
+    plt = Plot();
+    
+    % Contour plot
     contourf(normEEM.Ex,normEEM.Em,(squeeze(normEEM.X(i,:,:))));
     
+    % Color scale and colorbar
     caxis([0 maxIntensity]);
     colorbar;
-    ylabel(colorbar,FlUnit);
+    ylabel(colorbar, FlUnit); % Color bar label
     
+    % X, Y axes labels, and figure title
     xlabel('Ex. (nm)');
     ylabel('Em. (nm)');
-        
     title(normEEM.Sample{i},'interpreter','none');
-    set(fh, 'color','w', 'position', [50 50 800 500]);
     
+    % Plot peaks location
     hold on;
-    cent = FastPeakFind(squeeze(normEEM.X(i,:,:)),100);
-    plot(normEEM.Ex(cent(1:2:end)),normEEM.Em(cent(2:2:end)),'rs');
+    raw_img = squeeze(normEEM.X(i,:,:));
+    cent = FastPeakFind(raw_img);
+    scatter(normEEM.Ex(cent(1:2:end)), normEEM.Em(cent(2:2:end)), 20, 'r', 'filled');
     hold off;
     
-    export_fig([outPath,'/', normEEM.Sample{i},'.pdf']);
-    close(fh);
+    % Make it visible
+    movegui(fh, 'center');
+    set(fh, 'Visible', 'on');
+    
+    % Export figure
+    plt.export([outPath,'/', normEEM.Sample{i},'.pdf']);
 end

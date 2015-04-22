@@ -14,5 +14,8 @@ addpath('./lib/FastPeakFind/');
 % RotateXLabels
 addpath('./lib/rotateXLabels/');
 
+% PlotPub
+addpath('./lib/plotPub/');
+
 % Our code
 addpath('./src/gui/');

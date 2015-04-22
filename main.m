@@ -87,9 +87,15 @@ data = guidata(hObject);
 numEx = data.numEx;
 numEm = data.numEm;
 
+% Get last opened location
+if ~isfield(data, 'lastPath')
+    data.lastPath = '.';
+end
+lastPath = data.lastPath;
+
 % Get experiment data
 % EEM stands for ex em matrix
-[fileNames, pathName,~] = uigetfile('.txt', 'MultiSelect', 'on');
+[fileNames, pathName,~] = uigetfile([lastPath, '/.txt'], 'MultiSelect', 'on');
 
 % Check file names
 if ~iscell(fileNames)
@@ -108,6 +114,9 @@ if ~iscell(fileNames)
         disp('If you see these msg, please email author');
     end
 end
+
+% Update lastPath
+data.lastPath = pathName;
 
 expEEM = buildTensor(fileNames, pathName, numEm, numEx);
 
@@ -151,8 +160,14 @@ data = guidata(hObject);
 numEm = data.numEm;
 numEx = data.numEx;
 
+% Get last opened location
+if ~isfield(data, 'lastPath')
+    data.lastPath = '.';
+end
+lastPath = data.lastPath;
+
 % Get background file
-[fileNames, pathName, ~] = uigetfile('.txt', 'MultiSelect', 'on');
+[fileNames, pathName, ~] = uigetfile([lastPath, '/.txt'], 'MultiSelect', 'on');
 
 % Check file names
 if ~iscell(fileNames)
@@ -168,6 +183,9 @@ if ~iscell(fileNames)
         disp('If you see these msg, please email author');
     end
 end
+
+% Update lastPath
+data.lastPath = pathName;
 
 data.bgEEM = buildTensor(fileNames, pathName, numEm, numEx);
 
@@ -210,8 +228,14 @@ function plotContour_Callback(hObject, eventdata, handles)
 % Get data
 data = guidata(hObject);
 
+% Get last opened location
+if ~isfield(data, 'lastPath')
+    data.lastPath = '.';
+end
+lastPath = data.lastPath;
+
 % Get path
-outPath = uigetdir('.', 'Selection location');
+outPath = uigetdir(lastPath, 'Selection location');
 
 % Abort if no path is selected
 if outPath == 0
@@ -219,12 +243,19 @@ if outPath == 0
     return
 end
 
+% Update lastPath
+data.lastPath = outPath;
+
 % Plot data
 fhs = plotContour(data.normEEM, 'RU', outPath);
 
 % Get a success signal
 waitfor(msgbox('Plotting completed! Close all Images?'));
 close(fhs);
+
+% Update data
+guidata(hObject, data);
+
 
 
 
@@ -261,7 +292,7 @@ end
 
 % Update
 data.numEx = numEx;
-guidata(hObject,data);
+guidata(hObject, data);
 
 
 % --- Executes during object creation, after setting all properties.
@@ -419,8 +450,9 @@ else
         set(findobj('Tag', 'pftest'), 'Enable', 'on');
     end
 end
+
 % Update
-guidata(hObject,data);
+guidata(hObject, data);
 
 % --- Executes during object creation, after setting all properties.
 function numMaxFac_CreateFcn(hObject, eventdata, handles)
@@ -447,6 +479,7 @@ data = guidata(hObject);
 % pftest
 [ssX,Corco,It] = pftest(data.numIter, data.normEEM.X, data.numMaxFac, ...
     [0 0 0 0 NaN]);
+movegui(gcf, 'center');
 
 
 % --- Executes on button press in plotPeak.
@@ -490,14 +523,23 @@ while 1
     end
 end
 
+% Get last opened location
+if ~isfield(data, 'lastPath')
+    data.lastPath = '.';
+end
+lastPath = data.lastPath;
+
 % Get path
-outPath = uigetdir('.', 'Selection location');
+outPath = uigetdir(lastPath, 'Selection location');
 
 % Abort if no path is selected
 if outPath == 0
     waitfor(msgbox('Invalid path!'));
     return
 end
+
+% Update lastPath
+data.lastPath = outPath;
 
 % Plot data
 fh = plotPeak(data.normEEM, peakEm, peakEx, outPath);
@@ -506,6 +548,9 @@ fh = plotPeak(data.normEEM, peakEm, peakEx, outPath);
 % Get a success signal
 waitfor(msgbox('Plotting completed! Close all Images?'));
 close(fh);
+
+% Update
+guidata(hObject, data);
 
 
 
@@ -621,12 +666,21 @@ factsCP = data.factsCP;
 % Get number of components
 numComp = size(data.factsCP{1}, 2);
 
+% Get last opened location
+if ~isfield(data, 'lastPath')
+    data.lastPath = '.';
+end
+lastPath = data.lastPath;
+
 % Get output dir
-outPath = uigetdir('.', 'Selection location');
+outPath = uigetdir(lastPath, 'Selection location');
 if outPath == 0
     waitfor(msgbox('Invalid path!'));
     return
 end
+
+% Update lastPath
+data.lastPath = outPath;
 
 for i = 1:numComp
     % Create dir if not exists
@@ -654,7 +708,7 @@ for i = 1:numComp
 end
 
 % Update
-guidata(hObject,data);
+guidata(hObject, data);
 
 % Gain focus
 uicontrol(hObject);
@@ -698,12 +752,21 @@ factsCP = data.factsCP;
 % Get number of components
 numComp = size(data.factsCP{1}, 2);
 
+% Get last opened location
+if ~isfield(data, 'lastPath')
+    data.lastPath = '.';
+end
+lastPath = data.lastPath;
+
 % Get output dir
-outPath = uigetdir('.', 'Selection location');
+outPath = uigetdir(lastPath, 'Selection location');
 if outPath == 0
     waitfor(msgbox('Invalid path!'));
     return
 end
+
+% Update lastPath
+data.lastPath = outPath;
 
 for i = 1:numComp
     newDir = ['comp', num2str(i)];

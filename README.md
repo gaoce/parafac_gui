@@ -32,3 +32,6 @@ A GUI to conduct PARAFAC for spectroscopy data.
 
 5. Screenshot
 ![screenshot](/screenshot.png)
+
+6. Known bugs
+  1. Currently there should be only 1 instance of this app running

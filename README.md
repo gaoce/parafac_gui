@@ -6,7 +6,7 @@ A GUI to conduct PARAFAC for spectroscopy data.
 
 1. The following packages or toolboxes are used
   * [DOMFLuor](http://www.models.life.ku.dk/al_domfluor)
-  * [export_fig](http://www.mathworks.com/matlabcentral/fileexchange/23629-export-fig)
+  * [PlotPub](http://www.mathworks.com/matlabcentral/fileexchange/47921-plotpub-publication-quality-graphs-in-matlab)
   * [FastPeakFind](http://www.mathworks.com/matlabcentral/fileexchange/37388-fast-2d-peak-finder)
   * [RotateXLabels](http://www.mathworks.com/matlabcentral/fileexchange/45172-rotatexlabels)
 

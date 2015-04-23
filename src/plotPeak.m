@@ -16,8 +16,7 @@ for i = 1:normEEM.nSample
     intensity(i) = normEEM.X(i, locPeakEm, locPeakEx);
 end
 
-% fh = figure('Visible','off');
-fh = figure();
+fh = figure('Visible','off');
 % Location and size
 set(fh,'color','w','Position',[50 50 600 600]);
 

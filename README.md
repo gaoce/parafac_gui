@@ -2,17 +2,16 @@ PARAFAC Toolbox
 ===============
 A GUI to conduct PARAFAC for spectroscopy data.
 
-0. This app requires MATLAB version 2012b or later.
+0. This app requires MATLAB version 2012b or later. Tested on Windows 7 and Mac
+   OS X.
 
 1. The following packages or toolboxes are used
   * [DOMFLuor](http://www.models.life.ku.dk/al_domfluor)
   * [PlotPub](http://www.mathworks.com/matlabcentral/fileexchange/47921-plotpub-publication-quality-graphs-in-matlab)
   * [FastPeakFind](http://www.mathworks.com/matlabcentral/fileexchange/37388-fast-2d-peak-finder)
-  * [RotateXLabels](http://www.mathworks.com/matlabcentral/fileexchange/45172-rotatexlabels)
 
 2. For end user
-  * Double click `dist/PARAFAC.mlappinstall` to install
-  * The plotting functionality requires [ghostscript](http://www.ghostscript.com/), download and install from there
+  * Double click `PARAFAC.mlappinstall` to install
 
 3. For developer
   0. Run `configPath.m` before anything

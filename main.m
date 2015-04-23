@@ -114,7 +114,16 @@ end
 % Update lastPath
 data.lastPath = pathName;
 
+% Constuct EEM obj from input files
 expEEM = buildTensor(fileNames, pathName, numEm, numEx);
+
+% Abort if no path is selected
+if isnumeric(expEEM) && (expEEM == 0)
+    waitfor(msgbox('The data cannot be imported, check the parameters'));
+    % TODO there should be some existing cell array like inBtn = {'inputBg', 'inputExp'}
+    switchComp({'inputBg'}, 'off');
+    return
+end
 
 % Save a copy of original EEM data
 data.expEEM = expEEM;
@@ -181,7 +190,18 @@ end
 % Update lastPath
 data.lastPath = pathName;
 
-data.bgEEM = buildTensor(fileNames, pathName, numEm, numEx);
+% Construct EEM data
+bgEEM = buildTensor(fileNames, pathName, numEm, numEx);
+
+% Abort if no path is selected
+if isnumeric(bgEEM) && (bgEEM == 0)
+    waitfor(msgbox('The data cannot be imported, check the parameters'));
+    switchComp({'normalize'}, 'off');
+    return
+end
+
+% Assign background data
+data.bgEEM = bgEEM;
 
 % Set a flag for background data
 data.bg = 1;

@@ -22,6 +22,7 @@ numSample = length(fileNames);
 X = zeros(numSample, numEm, numEx);
 
 Sample = cell(numSample,1);
+
 for i = 1:numSample
     % Construct file name
     fileName = [pathName, '/', fileNames{i}];
@@ -32,10 +33,20 @@ for i = 1:numSample
     % Get data
     [mat, Em, Ex] = getIntensityMatrix(fileName, numEx);
     
+    % Check if the input size does not match
+    if any(size(mat) ~= [numEm, numEx])
+        EEMData = 0;
+        return
+    end
+    
+    % Assign the matrix to a slice of tensor
     X(i,:,:) = mat;
+    
+    % Add sample name
     Sample{i} = name;
 end
 
+% Construct EEM obj
 EEMData.X = X;
 EEMData.Ex = Ex;
 EEMData.Em = Em;

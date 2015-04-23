@@ -104,11 +104,7 @@ if ~iscell(fileNames)
         fileNames = {fileNames};
     elseif fileNames == 0
         % The user cancels the select, quit quitely
-        % TODO: there should be a function to do this
-        set(findobj('Tag', 'inputBg'), 'Enable', 'off');
-        set(findobj('Tag', 'normalize'), 'Enable', 'off');
-        set(findobj('Tag', 'plotContour'), 'Enable', 'off');
-        set(findobj('Tag', 'plotPeak'), 'Enable', 'off');
+        switchComp({'inputBg', 'normalize', 'plotContour', 'plotPeak'}, 'off');
         return
     else
         disp('If you see these msg, please email author');
@@ -136,15 +132,13 @@ guidata(hObject, data);
 set(findobj('Tag', 'normFlag'), 'String', '');
 
 % Enable input background and plotting
-set(findobj('Tag', 'inputBg'), 'Enable', 'on');
-set(findobj('Tag', 'plotContour'), 'Enable', 'on');
-set(findobj('Tag', 'plotPeak'), 'Enable', 'on');
+switchComp({'inputBg', 'plotContour', 'plotPeak', 'numFac'}, 'on');
 
 % If the parameters allow, enable pftest
 if checkTagNum('numIter') ~= 0 && checkTagNum('numMaxFac') ~= 0
-    set(findobj('Tag', 'pftest'), 'Enable', 'on');
+    switchComp({'pftest'}, 'on');
 end
-set(findobj('Tag', 'numFac'), 'Enable', 'on');
+
 
 % --- Executes on button press in inputBg.
 function inputBg_Callback(hObject, eventdata, handles)
@@ -177,7 +171,7 @@ if ~iscell(fileNames)
     elseif fileNames == 0
         % The user cancels the select, quit quitely
         % TODO: there should be a function to do this
-        set(findobj('Tag', 'normalize'), 'Enable', 'off');
+        switchComp({'normalize'}, 'off');
         return
     else
         disp('If you see these msg, please email author');
@@ -193,7 +187,7 @@ data.bgEEM = buildTensor(fileNames, pathName, numEm, numEx);
 data.bg = 1;
 
 % Enable normalization
-set(findobj('Tag', 'normalize'), 'Enable', 'on');
+switchComp({'normalize'}, 'on');
 
 % New background data, no longer normalized
 set(findobj('Tag', 'normFlag'), 'String', '');
@@ -276,17 +270,14 @@ numEx = getNum(hObject);
 % Determine which btns should be enabled
 if numEx == 0
     % Got an invlid data
-    set(findobj('Tag', 'numEm'), 'Enable', 'off');
-    set(findobj('Tag', 'inputExp'), 'Enable', 'off');
-    set(findobj('Tag', 'inputBg'), 'Enable', 'off');
+    switchComp({'numEm', 'inputExp', 'inputBg'}, 'off');
     return
 else
     % Got valid data
-    set(findobj('Tag', 'numEm'), 'Enable', 'on');
+    switchComp({'numEm'}, 'on');
     if checkTagNum('numEm') ~= 0
         % If numEm is also valid
-        set(findobj('Tag', 'inputExp'), 'Enable', 'on');
-        set(findobj('Tag', 'inputBg'), 'Enable', 'on');
+        switchComp({'inputExp', 'inputBg'}, 'on');
     end
 end
 
@@ -325,15 +316,12 @@ numEm = getNum(hObject);
 
 % Determine the which btns should be enabled
 if numEm == 0
-    set(findobj('Tag', 'numEx'), 'Enable', 'off');
-    set(findobj('Tag', 'inputExp'), 'Enable', 'off');
-    set(findobj('Tag', 'inputBg'), 'Enable', 'off');
+    switchComp({'numEx', 'inputExp', 'inputBg'}, 'off');
     return
 else
-    set(findobj('Tag', 'numEx'), 'Enable', 'on');
+    switchComp({'numEx'}, 'on');
     if checkTagNum('numEx') ~= 0
-        set(findobj('Tag', 'inputExp'), 'Enable', 'on');
-        set(findobj('Tag', 'inputBg'), 'Enable', 'on');
+        switchComp({'inputExp', 'inputBg'}, 'on');
     end
 end
 
@@ -399,14 +387,13 @@ data = guidata(hObject);
 % Store the data
 numIter = getNum(hObject);
 if numIter == 0
-    set(findobj('Tag', 'numFacMax'), 'Enable', 'off');
-    set(findobj('Tag', 'pftest'), 'Enable', 'off');
+    switchComp({'numMaxFac', 'pftest'}, 'off');
     return
 else
     data.numIter = numIter;
-    set(findobj('Tag', 'numMaxFac'), 'Enable', 'on');
+    switchComp({'numMaxFac'}, 'on');
     if checkTagNum('numMaxFac') ~= 0 && isfield(data, 'input') && data.input == 1
-        set(findobj('Tag', 'pftest'), 'Enable', 'on');
+        switchComp({'pftest'}, 'on');
     end
 end
 % Update
@@ -440,14 +427,13 @@ data = guidata(hObject);
 % Store the data
 numMaxFac = getNum(hObject);
 if numMaxFac == 0
-    set(findobj('Tag', 'numIter'), 'Enable', 'off');
-    set(findobj('Tag', 'pftest'), 'Enable', 'off');
+    switchComp({'numIter', 'pftest'}, 'off');
     return
 else
     data.numMaxFac = numMaxFac;
-    set(findobj('Tag', 'numIter'), 'Enable', 'on');
+    switchComp({'numIter'}, 'on');
     if checkTagNum('numIter') ~= 0 && isfield(data, 'input') && data.input == 1
-        set(findobj('Tag', 'pftest'), 'Enable', 'on');
+        switchComp({'pftest'}, 'on');
     end
 end
 
@@ -576,8 +562,7 @@ data.decompose = 1;
 guidata(hObject,data);
 
 % Enable plotting
-set(findobj('Tag', 'plotCompContour'), 'Enable', 'on');
-set(findobj('Tag', 'plotCompPeak'), 'Enable', 'on');
+switchComp({'plotCompContour', 'plotCompPeak'}, 'on');
 
 msgbox('Decomposition completed!');
 
@@ -620,17 +605,14 @@ data = guidata(hObject);
 % Store the data
 numFac = getNum(hObject);
 if numFac == 0
-    set(findobj('Tag', 'decompose'), 'Enable', 'off');
-    set(findobj('Tag', 'plotCompContour'), 'Enable', 'off');
-    set(findobj('Tag', 'plotCompPeak'), 'Enable', 'off');
+    switchComp({'decompose', 'plotCompContour', 'plotCompPeak'}, 'off');
     % Wrong number, must re-do the decomposition
     data.decompose = 0;
 else
-    data.numFac = numFac;    
-    set(findobj('Tag', 'decompose'), 'Enable', 'on');
+    data.numFac = numFac;
+    switchComp({'decompose'}, 'on');
     if data.decompose == 1
-        set(findobj('Tag', 'plotCompContour'), 'Enable', 'on');
-        set(findobj('Tag', 'plotCompPeak'), 'Enable', 'on');
+        switchComp({'plotCompContour', 'plotCompPeak'}, 'on');
     end
 end
 

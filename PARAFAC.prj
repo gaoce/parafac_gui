@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <deployment-project plugin="plugin.apptool" plugin-version="1.0">
-  <configuration target="target.mlapps" target-name="Package App" name="PARAFAC" location="C:\workspace\matlab\parafac_gui" file="C:\workspace\matlab\parafac_gui\PARAFAC.prj" build-checksum="2230045156">
+    <configuration target="target.mlapps" target-name="Package App" name="PARAFAC" location="C:\workspace\matlab\parafac_gui" file="C:\workspace\matlab\parafac_gui\PARAFAC.prj" build-checksum="2230045156">
     <param.appname>PARAFAC</param.appname>
     <param.authnamewatermark>Ce Gao</param.authnamewatermark>
     <param.email />

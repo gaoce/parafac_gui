@@ -1,5 +1,5 @@
 function setup(varargin)
-% Configure path ==============================================================
+% Configure path
 % Change the path of he following toolboxes in case they are moved or renamed
 
 if nargin == 0
@@ -25,6 +25,6 @@ addpath('./lib/FastPeakFind/');
 addpath('./lib/plotPub/');
 
 % Our code
-addpath('./src/gui/');
+addpath('./src/');
 
 end

@@ -95,7 +95,7 @@ lastPath = data.lastPath;
 
 % Get experiment data
 % EEM stands for ex em matrix
-[fileNames, pathName,~] = uigetfile([lastPath, '/.txt'], 'MultiSelect', 'on');
+[fileNames, pathName, ~] = uigetfile([lastPath, '/.txt'], 'MultiSelect', 'on');
 
 % Check file names
 if ~iscell(fileNames)

@@ -22,7 +22,7 @@ function varargout = main(varargin)
 
 % Edit the above text to modify the response to help main
 
-% Last Modified by GUIDE v2.5 18-Apr-2015 22:38:35
+% Last Modified by GUIDE v2.5 22-Apr-2015 21:50:30
 
 % Begin initialization code - DO NOT EDIT
 gui_Singleton = 1;
@@ -229,13 +229,13 @@ function plotContour_Callback(hObject, eventdata, handles)
 data = guidata(hObject);
 
 % Get last opened location
-if ~isfield(data, 'lastPath')
-    data.lastPath = '.';
+if ~isfield(data, 'lastPlotPath')
+    data.lastPlotPath = '.';
 end
-lastPath = data.lastPath;
+lastPlotPath = data.lastPlotPath;
 
 % Get path
-outPath = uigetdir(lastPath, 'Selection location');
+outPath = uigetdir(lastPlotPath, 'Selection location');
 
 % Abort if no path is selected
 if outPath == 0
@@ -243,8 +243,8 @@ if outPath == 0
     return
 end
 
-% Update lastPath
-data.lastPath = outPath;
+% Update lastPlotPath
+data.lastPlotPath = outPath;
 
 % Plot data
 fhs = plotContour(data.normEEM, 'RU', outPath);
@@ -524,13 +524,13 @@ while 1
 end
 
 % Get last opened location
-if ~isfield(data, 'lastPath')
-    data.lastPath = '.';
+if ~isfield(data, 'lastPlotPath')
+    data.lastPlotPath = '.';
 end
-lastPath = data.lastPath;
+lastPlotPath = data.lastPlotPath;
 
 % Get path
-outPath = uigetdir(lastPath, 'Selection location');
+outPath = uigetdir(lastPlotPath, 'Selection location');
 
 % Abort if no path is selected
 if outPath == 0
@@ -539,7 +539,7 @@ if outPath == 0
 end
 
 % Update lastPath
-data.lastPath = outPath;
+data.lastPlotPath = outPath;
 
 % Plot data
 fh = plotPeak(data.normEEM, peakEm, peakEx, outPath);
@@ -635,7 +635,7 @@ else
 end
 
 % Update
-guidata(hObject,data);
+guidata(hObject, data);
 
 
 % --- Executes during object creation, after setting all properties.
@@ -667,20 +667,20 @@ factsCP = data.factsCP;
 numComp = size(data.factsCP{1}, 2);
 
 % Get last opened location
-if ~isfield(data, 'lastPath')
-    data.lastPath = '.';
+if ~isfield(data, 'lastPlotPath')
+    data.lastPlotPath = '.';
 end
-lastPath = data.lastPath;
+lastPlotPath = data.lastPlotPath;
 
 % Get output dir
-outPath = uigetdir(lastPath, 'Selection location');
+outPath = uigetdir(lastPlotPath, 'Selection location');
 if outPath == 0
     waitfor(msgbox('Invalid path!'));
     return
 end
 
 % Update lastPath
-data.lastPath = outPath;
+data.lastPlotPath = outPath;
 
 for i = 1:numComp
     % Create dir if not exists
@@ -753,20 +753,20 @@ factsCP = data.factsCP;
 numComp = size(data.factsCP{1}, 2);
 
 % Get last opened location
-if ~isfield(data, 'lastPath')
-    data.lastPath = '.';
+if ~isfield(data, 'lastPlotPath')
+    data.lastPlotPath = '.';
 end
-lastPath = data.lastPath;
+lastPlotPath = data.lastPlotPath;
 
 % Get output dir
-outPath = uigetdir(lastPath, 'Selection location');
+outPath = uigetdir(lastPlotPath, 'Selection location');
 if outPath == 0
     waitfor(msgbox('Invalid path!'));
     return
 end
 
 % Update lastPath
-data.lastPath = outPath;
+data.lastPlotPath = outPath;
 
 for i = 1:numComp
     newDir = ['comp', num2str(i)];

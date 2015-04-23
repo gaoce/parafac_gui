@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <deployment-project plugin="plugin.apptool" plugin-version="1.0">
-  <configuration target="target.mlapps" target-name="Package App" name="PARAFAC" location="C:\workspace\matlab\parafac_gui" file="C:\workspace\matlab\parafac_gui\PARAFAC.prj" build-checksum="4216012824">
+  <configuration target="target.mlapps" target-name="Package App" name="PARAFAC" location="C:\workspace\matlab\parafac_gui" file="C:\workspace\matlab\parafac_gui\PARAFAC.prj" build-checksum="3086000523">
     <param.appname>PARAFAC</param.appname>
     <param.authnamewatermark>Ce Gao</param.authnamewatermark>
     <param.email />
@@ -9,7 +9,7 @@
     <param.summary>A GUI to conduct PARAFAC.</param.summary>
     <param.description>A GUI application for PARAFAC that can be installed in MATLAB. This app will help decompose fluorescence excitation–emission matrix (EEM) spectroscopy data and export corresponding plots.</param.description>
     <param.screenshot>${PROJECT_ROOT}\screenshot.png</param.screenshot>
-    <param.version>3.7</param.version>
+    <param.version>3.8</param.version>
     <param.products.name>
       <item>Image Processing Toolbox</item>
       <item>Statistics Toolbox</item>
@@ -76,12 +76,12 @@
       <file>${PROJECT_ROOT}\lib\FastPeakFind\FastPeakFind.m</file>
       <file>${PROJECT_ROOT}\lib\plotPub\fixPSlinestyle.m</file>
       <file>${PROJECT_ROOT}\lib\plotPub\Plot.m</file>
-      <file>${PROJECT_ROOT}\lib\rotateXLabels\rotateXLabels.m</file>
       <file>${PROJECT_ROOT}\main.fig</file>
       <file>${PROJECT_ROOT}\src\gui\buildTensor.m</file>
       <file>${PROJECT_ROOT}\src\gui\normEEM.m</file>
       <file>${PROJECT_ROOT}\src\gui\plotContour.m</file>
       <file>${PROJECT_ROOT}\src\gui\plotPeak.m</file>
+      <file>${PROJECT_ROOT}\src\gui\rotateXTickLabel.m</file>
     </fileset.depfun>
     <fileset.resources>
       <file>${PROJECT_ROOT}\lib\DOMFluor\nway\def.mat</file>

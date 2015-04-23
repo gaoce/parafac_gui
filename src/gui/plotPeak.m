@@ -16,8 +16,8 @@ for i = 1:normEEM.nSample
     intensity(i) = normEEM.X(i, locPeakEm, locPeakEx);
 end
 
-% maxIntensity = max(intensity);
-fh = figure('Visible','off');
+% fh = figure('Visible','off');
+fh = figure();
 % Location and size
 set(fh,'color','w','Position',[50 50 600 600]);
 
@@ -25,13 +25,9 @@ set(fh,'color','w','Position',[50 50 600 600]);
 plt = Plot();
     
 bar(intensity);
-pos = get(gca,'Position');
-pos([2,4]) = [0.3, 0.6];
 
-% XTick  
-set(gca, 'XTickLabel', normEEM.Sample, 'Position', pos);
-rotateXLabels(gca,45);
 xlim([0 normEEM.nSample+1]);
+rotateXTickLabel(normEEM.Sample, 45);
 title(['Em: ', num2str(realPeakEm), ', Ex: ', num2str(realPeakEx)]);
 % ylim([0 maxIntensity]);
    

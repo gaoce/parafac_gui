@@ -5,14 +5,14 @@
 addpath('./lib/DOMFluor/');
 addpath('./lib/DOMFluor/nway/');
 
-% export_fig
-addpath('./lib/export_fig/');
+% export_fig (No longer needed)
+% addpath('./lib/export_fig/');
 
 % FastPeakFind
 addpath('./lib/FastPeakFind/');
 
-% RotateXLabels
-addpath('./lib/rotateXLabels/');
+% RotateXLabels (No longer needed)
+% addpath('./lib/rotateXLabels/');
 
 % PlotPub
 addpath('./lib/plotPub/');

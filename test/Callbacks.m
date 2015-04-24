@@ -30,8 +30,10 @@ classdef Callbacks < matlab.unittest.TestCase
             %% Mock uigetfile
             global FILENAME PATHNAME;
             FILENAME = {'2014-06-16 NA H2O2 5A.txt', ...
-                        '2014-06-16 NA H2O2 5B.txt'};
-            PATHNAME = './data/North Attleborough';
+                        '2014-06-16 NA H2O2 5B.txt',...
+                        '2014-06-16 NA H2O2 10A.txt',...
+                        '2014-06-16 NA H2O2 10A.txt'};
+            PATHNAME = './test/data/exp';
             
             %% funciton handle
             fh = @() main('inputExp_Callback', h, [], []);
@@ -50,7 +52,7 @@ classdef Callbacks < matlab.unittest.TestCase
             %% Mock uigetfile
             global FILENAME PATHNAME;
             FILENAME = {'DI.txt', 'DI 2.txt'};
-            PATHNAME = './data/DI';
+            PATHNAME = './test/data/bg';
             
             %% funciton handle
             fh = @() main('inputBg_Callback', h, [], []);

@@ -1,5 +1,6 @@
 # Data file
 data/
+!test/data/
 
 # Sample results
 result*/

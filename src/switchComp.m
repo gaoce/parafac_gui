@@ -5,13 +5,14 @@ if nargin == 2
     hObject = gcf;
 end
 
+data = guidata(hObject);
+
 for i = 1:length(tagNames)
-    obj = findobj(hObject, 'Tag', tagNames{i});
-    
     % Check if this a valid query 
-    assert(~isempty(obj), ['Cannot find the obj with tag: ', tagNames{i}]);
+    assert(isfield(data, tagNames{i}), ...
+        ['Cannot find the obj with tag: ', tagNames{i}]);
     
-    set(obj, 'Enable', status);
+    set(data.(tagNames{i}), 'Enable', status);
 end
 
 end

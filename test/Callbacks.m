@@ -4,14 +4,14 @@ classdef Callbacks < matlab.unittest.TestCase
         hObject
     end
     
-    methods(TestMethodSetup)
+    methods(TestClassSetup)
         function createFigure(testCase)
             % App Graph Handle
             testCase.hObject = main();
         end
     end
     
-    methods(TestMethodTeardown)
+    methods(TestClassTeardown)
         function closeFigure(testCase)
             close(testCase.hObject)
         end
@@ -30,8 +30,10 @@ classdef Callbacks < matlab.unittest.TestCase
             %% Mock uigetfile
             global FILENAME PATHNAME;
             FILENAME = {'2014-06-16 NA H2O2 5A.txt', ...
-                        '2014-06-16 NA H2O2 5B.txt'};
-            PATHNAME = './data/North Attleborough';
+                        '2014-06-16 NA H2O2 5B.txt',...
+                        '2014-06-16 NA H2O2 10A.txt',...
+                        '2014-06-16 NA H2O2 10A.txt'};
+            PATHNAME = './test/data/exp';
             
             %% funciton handle
             fh = @() main('inputExp_Callback', h, [], []);
@@ -50,7 +52,7 @@ classdef Callbacks < matlab.unittest.TestCase
             %% Mock uigetfile
             global FILENAME PATHNAME;
             FILENAME = {'DI.txt', 'DI 2.txt'};
-            PATHNAME = './data/DI';
+            PATHNAME = './test/data/bg';
             
             %% funciton handle
             fh = @() main('inputBg_Callback', h, [], []);
@@ -58,6 +60,29 @@ classdef Callbacks < matlab.unittest.TestCase
             %% Verify using test qualification
             testCase.verifyWarningFree(fh);
         end
+        
+        % Test the correct running of plotPeak_Callback
+%         function test_plotPeak_Callback(testCase)      
+%             %% Prepare graph handle
+%             h = testCase.hObject;
+%             data = struct('numEm', 361, 'numEx', 47);
+%             guidata(h, data);
+% 
+%             %% Mock uigetfile
+%             global FILENAME PATHNAME;
+%             FILENAME = {'DI.txt', 'DI 2.txt'};
+%             PATHNAME = './test/data/bg';
+%             
+%             %% Mock inputdlg
+%             
+%             %% Mock msgbox
+%             
+%             %% funciton handle
+%             fh = @() main('inputBg_Callback', h, [], []);
+%             
+%             %% Verify using test qualification
+%             testCase.verifyWarningFree(fh);
+%         end
     end
 
 end

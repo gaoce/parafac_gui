@@ -83,9 +83,9 @@ function inputExp_Callback(hObject, eventdata, handles)
 % Get data
 data = guidata(hObject);
 
-% Get numEx, numEx
-numEx = data.numEx;
-numEm = data.numEm;
+% Get numEmVal, numExVal
+numExVal = data.numExVal;
+numEmVal = data.numEmVal;
 
 % Get last opened location
 if ~isfield(data, 'lastPath')
@@ -116,7 +116,7 @@ end
 data.lastPath = pathName;
 
 % Constuct EEM obj from input files
-expEEM = buildTensor(fileNames, pathName, numEm, numEx);
+expEEM = buildTensor(fileNames, pathName, numEmVal, numExVal);
 
 % Abort if no path is selected
 if isnumeric(expEEM) && (expEEM == 0)
@@ -160,9 +160,9 @@ function inputBg_Callback(hObject, eventdata, handles)
 % Get data
 data = guidata(hObject);
 
-% Get numEm, numEx
-numEm = data.numEm;
-numEx = data.numEx;
+% Get numEmVal, numExVal
+numEmVal = data.numEmVal;
+numExVal = data.numExVal;
 
 % Get last opened location
 if ~isfield(data, 'lastPath')
@@ -192,7 +192,7 @@ end
 data.lastPath = pathName;
 
 % Construct EEM data
-bgEEM = buildTensor(fileNames, pathName, numEm, numEx);
+bgEEM = buildTensor(fileNames, pathName, numEmVal, numExVal);
 
 % Abort if no path is selected
 if isnumeric(bgEEM) && (bgEEM == 0)
@@ -286,10 +286,10 @@ function numEx_Callback(hObject, eventdata, handles)
 data = guidata(hObject);
 
 % Extract the data
-numEx = getNum(hObject);
+numExVal = getNum(hObject);
 
 % Determine which btns should be enabled
-if numEx == 0
+if numExVal == 0
     % Got an invlid data
     switchComp({'numEm', 'inputExp', 'inputBg'}, 'off', hObject);
     return
@@ -303,7 +303,7 @@ else
 end
 
 % Update
-data.numEx = numEx;
+data.numExVal = numExVal;
 guidata(hObject, data);
 
 
@@ -333,10 +333,10 @@ function numEm_Callback(hObject, eventdata, handles)
 data = guidata(hObject);
 
 % Extract the data
-numEm = getNum(hObject);
+numEmVal = getNum(hObject);
 
 % Determine the which btns should be enabled
-if numEm == 0
+if numEmVal == 0
     switchComp({'numEx', 'inputExp', 'inputBg'}, 'off', hObject);
     return
 else
@@ -348,7 +348,7 @@ end
 
     
 % Update data
-data.numEm = numEm;
+data.numEmVal = numEmVal;
 guidata(hObject,data);
 
 
@@ -558,8 +558,6 @@ close(fh);
 
 % Update
 guidata(hObject, data);
-
-
 
 % --- Executes on button press in decompose.
 function decompose_Callback(hObject, eventdata, handles)

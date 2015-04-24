@@ -60,6 +60,29 @@ classdef Callbacks < matlab.unittest.TestCase
             %% Verify using test qualification
             testCase.verifyWarningFree(fh);
         end
+        
+        % Test the correct running of plotPeak_Callback
+%         function test_plotPeak_Callback(testCase)      
+%             %% Prepare graph handle
+%             h = testCase.hObject;
+%             data = struct('numEm', 361, 'numEx', 47);
+%             guidata(h, data);
+% 
+%             %% Mock uigetfile
+%             global FILENAME PATHNAME;
+%             FILENAME = {'DI.txt', 'DI 2.txt'};
+%             PATHNAME = './test/data/bg';
+%             
+%             %% Mock inputdlg
+%             
+%             %% Mock msgbox
+%             
+%             %% funciton handle
+%             fh = @() main('inputBg_Callback', h, [], []);
+%             
+%             %% Verify using test qualification
+%             testCase.verifyWarningFree(fh);
+%         end
     end
 
 end

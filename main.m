@@ -83,10 +83,6 @@ function inputExp_Callback(hObject, eventdata, handles)
 % Get data
 data = guidata(hObject);
 
-% Get numEmVal, numExVal
-numExVal = data.numExVal;
-numEmVal = data.numEmVal;
-
 % Get last opened location
 if ~isfield(data, 'lastPath')
     data.lastPath = '.';
@@ -116,7 +112,7 @@ end
 data.lastPath = pathName;
 
 % Constuct EEM obj from input files
-expEEM = buildTensor(fileNames, pathName, numEmVal, numExVal);
+expEEM = buildTensor(fileNames, pathName);
 
 % Abort if no path is selected
 if isnumeric(expEEM) && (expEEM == 0)
@@ -131,6 +127,10 @@ data.expEEM = expEEM;
 
 % Normalized EEM data, tentative, will be changed by normalization
 data.normEEM = expEEM;
+
+% Setup numEmVal and numExVal in data
+data.numEmVal = expEEM.nEm;
+data.numExVal = expEEM.nEx;
 
 % Set a flag showing the completion of data input
 data.input = 1;
@@ -160,10 +160,6 @@ function inputBg_Callback(hObject, eventdata, handles)
 % Get data
 data = guidata(hObject);
 
-% Get numEmVal, numExVal
-numEmVal = data.numEmVal;
-numExVal = data.numExVal;
-
 % Get last opened location
 if ~isfield(data, 'lastPath')
     data.lastPath = '.';
@@ -192,7 +188,7 @@ end
 data.lastPath = pathName;
 
 % Construct EEM data
-bgEEM = buildTensor(fileNames, pathName, numEmVal, numExVal);
+bgEEM = buildTensor(fileNames, pathName);
 
 % Abort if no path is selected
 if isnumeric(bgEEM) && (bgEEM == 0)

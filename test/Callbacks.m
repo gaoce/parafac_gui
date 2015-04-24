@@ -4,14 +4,14 @@ classdef Callbacks < matlab.unittest.TestCase
         hObject
     end
     
-    methods(TestMethodSetup)
+    methods(TestClassSetup)
         function createFigure(testCase)
             % App Graph Handle
             testCase.hObject = main();
         end
     end
     
-    methods(TestMethodTeardown)
+    methods(TestClassTeardown)
         function closeFigure(testCase)
             close(testCase.hObject)
         end

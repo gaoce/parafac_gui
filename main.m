@@ -104,7 +104,8 @@ if ~iscell(fileNames)
         fileNames = {fileNames};
     elseif fileNames == 0
         % The user cancels the select, quit quitely
-        switchComp({'inputBg', 'normalize', 'plotContour', 'plotPeak'}, 'off');
+        switchComp({'inputBg', 'normalize', 'plotContour', 'plotPeak'},...
+                    'off', hObject);
         return
     else
         disp('If you see these msg, please email author');
@@ -141,7 +142,7 @@ guidata(hObject, data);
 set(findobj('Tag', 'normFlag'), 'String', '');
 
 % Enable input background and plotting
-switchComp({'inputBg', 'plotContour', 'plotPeak', 'numFac'}, 'on');
+switchComp({'inputBg', 'plotContour', 'plotPeak', 'numFac'}, 'on', hObject);
 
 % If the parameters allow, enable pftest
 if checkTagNum('numIter') ~= 0 && checkTagNum('numMaxFac') ~= 0
@@ -180,7 +181,7 @@ if ~iscell(fileNames)
     elseif fileNames == 0
         % The user cancels the select, quit quitely
         % TODO: there should be a function to do this
-        switchComp({'normalize'}, 'off');
+        switchComp({'normalize'}, 'off', hObject);
         return
     else
         disp('If you see these msg, please email author');
@@ -196,7 +197,7 @@ bgEEM = buildTensor(fileNames, pathName, numEm, numEx);
 % Abort if no path is selected
 if isnumeric(bgEEM) && (bgEEM == 0)
     waitfor(msgbox('The data cannot be imported, check the parameters'));
-    switchComp({'normalize'}, 'off');
+    switchComp({'normalize'}, 'off', hObject);
     return
 end
 
@@ -207,7 +208,7 @@ data.bgEEM = bgEEM;
 data.bg = 1;
 
 % Enable normalization
-switchComp({'normalize'}, 'on');
+switchComp({'normalize'}, 'on', hObject);
 
 % New background data, no longer normalized
 set(findobj('Tag', 'normFlag'), 'String', '');
@@ -290,14 +291,14 @@ numEx = getNum(hObject);
 % Determine which btns should be enabled
 if numEx == 0
     % Got an invlid data
-    switchComp({'numEm', 'inputExp', 'inputBg'}, 'off');
+    switchComp({'numEm', 'inputExp', 'inputBg'}, 'off', hObject);
     return
 else
     % Got valid data
-    switchComp({'numEm'}, 'on');
+    switchComp({'numEm'}, 'on', hObject);
     if checkTagNum('numEm') ~= 0
         % If numEm is also valid
-        switchComp({'inputExp', 'inputBg'}, 'on');
+        switchComp({'inputExp', 'inputBg'}, 'on', hObject);
     end
 end
 
@@ -336,12 +337,12 @@ numEm = getNum(hObject);
 
 % Determine the which btns should be enabled
 if numEm == 0
-    switchComp({'numEx', 'inputExp', 'inputBg'}, 'off');
+    switchComp({'numEx', 'inputExp', 'inputBg'}, 'off', hObject);
     return
 else
-    switchComp({'numEx'}, 'on');
+    switchComp({'numEx'}, 'on', hObject);
     if checkTagNum('numEx') ~= 0
-        switchComp({'inputExp', 'inputBg'}, 'on');
+        switchComp({'inputExp', 'inputBg'}, 'on', hObject);
     end
 end
 
@@ -407,13 +408,13 @@ data = guidata(hObject);
 % Store the data
 numIter = getNum(hObject);
 if numIter == 0
-    switchComp({'numMaxFac', 'pftest'}, 'off');
+    switchComp({'numMaxFac', 'pftest'}, 'off', hObject);
     return
 else
     data.numIter = numIter;
-    switchComp({'numMaxFac'}, 'on');
+    switchComp({'numMaxFac'}, 'on', hObject);
     if checkTagNum('numMaxFac') ~= 0 && isfield(data, 'input') && data.input == 1
-        switchComp({'pftest'}, 'on');
+        switchComp({'pftest'}, 'on', hObject);
     end
 end
 % Update
@@ -447,13 +448,13 @@ data = guidata(hObject);
 % Store the data
 numMaxFac = getNum(hObject);
 if numMaxFac == 0
-    switchComp({'numIter', 'pftest'}, 'off');
+    switchComp({'numIter', 'pftest'}, 'off', hObject);
     return
 else
     data.numMaxFac = numMaxFac;
-    switchComp({'numIter'}, 'on');
+    switchComp({'numIter'}, 'on', hObject);
     if checkTagNum('numIter') ~= 0 && isfield(data, 'input') && data.input == 1
-        switchComp({'pftest'}, 'on');
+        switchComp({'pftest'}, 'on', hObject);
     end
 end
 
@@ -582,7 +583,7 @@ data.decompose = 1;
 guidata(hObject,data);
 
 % Enable plotting
-switchComp({'plotCompContour', 'plotCompPeak'}, 'on');
+switchComp({'plotCompContour', 'plotCompPeak'}, 'on', hObject);
 
 msgbox('Decomposition completed!');
 
@@ -625,14 +626,14 @@ data = guidata(hObject);
 % Store the data
 numFac = getNum(hObject);
 if numFac == 0
-    switchComp({'decompose', 'plotCompContour', 'plotCompPeak'}, 'off');
+    switchComp({'decompose', 'plotCompContour', 'plotCompPeak'}, 'off', hObject);
     % Wrong number, must re-do the decomposition
     data.decompose = 0;
 else
     data.numFac = numFac;
-    switchComp({'decompose'}, 'on');
+    switchComp({'decompose'}, 'on', hObject);
     if data.decompose == 1
-        switchComp({'plotCompContour', 'plotCompPeak'}, 'on');
+        switchComp({'plotCompContour', 'plotCompPeak'}, 'on', hObject);
     end
 end
 

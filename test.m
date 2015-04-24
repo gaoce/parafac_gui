@@ -6,7 +6,7 @@ setup('test');
 
 % Construct TestSuite
 import matlab.unittest.TestSuite;
-fileSuite = TestSuite.fromFile('GuiTest.m'); 
+testCases = [Callbacks];
 
 % Run the test
-result = run(fileSuite);
+result = run(testCases)

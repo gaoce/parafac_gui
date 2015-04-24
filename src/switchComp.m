@@ -1,8 +1,12 @@
-function switchComp(tagNames, status)
-%SWITCH Switch gui component on or off 
+function switchComp(tagNames, status, hObject)
+%SWITCH Switch gui component on or off
+
+if nargin == 2
+    hObject = gcf;
+end
 
 for i = 1:length(tagNames)
-    obj = findobj('Tag', tagNames{i});
+    obj = findobj(hObject, 'Tag', tagNames{i});
     
     % Check if this a valid query 
     assert(~isempty(obj), ['Cannot find the obj with tag: ', tagNames{i}]);

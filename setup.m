@@ -2,6 +2,9 @@ function setup(varargin)
 % Configure path
 % Change the path of he following toolboxes in case they are moved or renamed
 
+% Restore original path first
+restoredefaultpath;
+
 if nargin == 0
     setupMode = 'norm';
 elseif nargin == 1

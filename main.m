@@ -559,8 +559,6 @@ close(fh);
 % Update
 guidata(hObject, data);
 
-
-
 % --- Executes on button press in decompose.
 function decompose_Callback(hObject, eventdata, handles)
 % hObject    handle to decompose (see GCBO)

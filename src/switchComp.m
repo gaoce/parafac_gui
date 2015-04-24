@@ -8,18 +8,11 @@ end
 data = guidata(hObject);
 
 for i = 1:length(tagNames)
-    tag = tagNames{i};
-    % Check if this a valid query
-    compHandle = findobj('Tag', tag);
-    if isempty(compHandle)
-        if isfield(data, tag)
-            compHandle = data.(tag);
-        else
-            error(['Cannot find the obj with tag: ', tag]);
-        end
-    end
+    % Check if this a valid query 
+    assert(isfield(data, tagNames{i}), ...
+        ['Cannot find the obj with tag: ', tagNames{i}]);
     
-    set(compHandle, 'Enable', status);
+    set(data.(tagNames{i}), 'Enable', status);
 end
 
 end

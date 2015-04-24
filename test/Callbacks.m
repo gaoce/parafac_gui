@@ -22,11 +22,6 @@ classdef Callbacks < matlab.unittest.TestCase
         
         % Test the correct running of inputExp
         function test_inputExp_Callback(testCase)      
-            %% Prepare graph handle
-            h = testCase.hObject;
-            data = struct('numEm', 361, 'numEx', 47);
-            guidata(h, data);
-
             %% Mock uigetfile
             global FILENAME PATHNAME;
             FILENAME = {'2014-06-16 NA H2O2 5A.txt', ...
@@ -36,7 +31,7 @@ classdef Callbacks < matlab.unittest.TestCase
             PATHNAME = './test/data/exp';
             
             %% funciton handle
-            fh = @() main('inputExp_Callback', h, [], []);
+            fh = @() main('inputExp_Callback', testCase.hObject, [], []);
             
             %% Verify using test qualification
             testCase.verifyWarningFree(fh);
@@ -44,18 +39,13 @@ classdef Callbacks < matlab.unittest.TestCase
         
         % Test the correct running of inputBg
         function test_inputBg_Callback(testCase)      
-            %% Prepare graph handle
-            h = testCase.hObject;
-            data = struct('numEm', 361, 'numEx', 47);
-            guidata(h, data);
-
             %% Mock uigetfile
             global FILENAME PATHNAME;
             FILENAME = {'DI.txt', 'DI 2.txt'};
             PATHNAME = './test/data/bg';
             
             %% funciton handle
-            fh = @() main('inputBg_Callback', h, [], []);
+            fh = @() main('inputBg_Callback', testCase.hObject, [], []);
             
             %% Verify using test qualification
             testCase.verifyWarningFree(fh);

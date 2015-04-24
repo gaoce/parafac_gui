@@ -14,20 +14,20 @@ else
 end
 
 if setupMode == 'test'
-    addpath('./test');
+    addpath(fullfile(pwd, './test'));
 end
 
 % DOMFLour
-addpath('./lib/DOMFluor/');
-addpath('./lib/DOMFluor/nway/');
+addpath(fullfile(pwd, './lib/DOMFluor/'));
+addpath(fullfile(pwd, './lib/DOMFluor/nway/'));
 
 % FastPeakFind
-addpath('./lib/FastPeakFind/');
+addpath(fullfile(pwd, './lib/FastPeakFind/'));
 
 % PlotPub
-addpath('./lib/plotPub/');
+addpath(fullfile(pwd, './lib/plotPub/'));
 
 % Our code
-addpath('./src/');
+addpath(fullfile(pwd, './src/'));
 
 end

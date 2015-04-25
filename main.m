@@ -386,9 +386,8 @@ function pftest_Callback(hObject, eventdata, handles)
 % Get data
 data = guidata(hObject);
 
-% pftest
-[ssX,Corco,It] = pftest(data.numIterVal, data.normEEM.X, data.numMaxFacVal, ...
-    [0 0 0 0 NaN]);
+% pftest, evalc is used to capture the screen output
+evalc('pftest(data.numIterVal, data.normEEM.X, data.numMaxFacVal,[0 0 0 0 NaN])');
 
 tHandle = gcf;
 movegui(tHandle, 'center');
@@ -479,7 +478,7 @@ function decompose_Callback(hObject, eventdata, handles)
 data = guidata(hObject);
 
 % Decomposition
-[factsCP] = parafac(data.normEEM.X, data.numFacVal, [0 0 0 0 NaN]);
+[~, factsCP] = evalc('parafac(data.normEEM.X, data.numFacVal, [0 0 0 0 NaN])');
 
 % Store data
 data.factsCP = factsCP;
@@ -710,3 +709,8 @@ guidata(hObject,data);
 
 % Gain focus
 uicontrol(hObject);
+
+function call_unused()
+% pftest is used in evalc, which could not be analyzed by app packaging sys.    
+    pftest;
+    parafac;

@@ -39,7 +39,8 @@ classdef CallbackTests < matlab.unittest.TestCase
             data.numMaxFacVal = 3;
             
             % Decompose
-            [factsCP] = parafac(data.normEEM.X, data.numFacVal, [0 0 0 0 NaN]);
+            [~, factsCP] = ...
+                evalc('parafac(data.normEEM.X, data.numFacVal, [0 0 0 0 NaN])');
             data.factsCP = factsCP;
             
             % Update data

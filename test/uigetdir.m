@@ -1,5 +1,5 @@
-function answer = inputdlg(varargin)
-%INPUTDLG mock function for inputdlg
+function answer = uigetdir(varargin)
+%UIGETDIR Mock function of uigetdir
 
 persistent ANSWER;
 

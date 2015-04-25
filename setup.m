@@ -11,12 +11,12 @@ else
 end
 
 if strcmp(setupMode, 'test')
-    addpath(fullfile(pwd, './test'));
     if ~isOn('PARAFAC_TESTING')
         % Restore original path first
         restoredefaultpath;
         setStatus('PARAFAC_TESTING');
     end
+    addpath(fullfile(pwd, './test'));
 elseif strcmp(setupMode, 'dev')
     if ~isOn('PARAFAC_DEVELOPING')
         % Restore original path first

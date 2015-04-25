@@ -268,99 +268,6 @@ close(fhs);
 guidata(hObject, data);
 
 
-
-
-function numEx_Callback(hObject, eventdata, handles)
-% hObject    handle to numEx (see GCBO)
-% eventdata  reserved - to be defined in a future version of MATLAB
-% handles    structure with handles and user data (see GUIDATA)
-
-% Hints: get(hObject,'String') returns contents of numEx as text
-%        str2double(get(hObject,'String')) returns contents of numEx as a double
-
-% Get data
-data = guidata(hObject);
-
-% Extract the data
-numExVal = getNum(hObject);
-
-% Determine which btns should be enabled
-if numExVal == 0
-    % Got an invlid data
-    switchComp({'numEm', 'inputExp', 'inputBg'}, 'off', hObject);
-    return
-else
-    % Got valid data
-    switchComp({'numEm'}, 'on', hObject);
-    if checkTagNum('numEm') ~= 0
-        % If numEm is also valid
-        switchComp({'inputExp', 'inputBg'}, 'on', hObject);
-    end
-end
-
-% Update
-data.numExVal = numExVal;
-guidata(hObject, data);
-
-
-% --- Executes during object creation, after setting all properties.
-function numEx_CreateFcn(hObject, eventdata, handles)
-% hObject    handle to numEx (see GCBO)
-% eventdata  reserved - to be defined in a future version of MATLAB
-% handles    empty - handles not created until after all CreateFcns called
-
-% Hint: edit controls usually have a white background on Windows.
-%       See ISPC and COMPUTER.
-if ispc && isequal(get(hObject,'BackgroundColor'), get(0,'defaultUicontrolBackgroundColor'))
-    set(hObject,'BackgroundColor','white');
-end
-
-
-
-function numEm_Callback(hObject, eventdata, handles)
-% hObject    handle to numEm (see GCBO)
-% eventdata  reserved - to be defined in a future version of MATLAB
-% handles    structure with handles and user data (see GUIDATA)
-
-% Hints: get(hObject,'String') returns contents of numEx as text
-%        str2double(get(hObject,'String')) returns contents of numEx as a double
-
-% Get data
-data = guidata(hObject);
-
-% Extract the data
-numEmVal = getNum(hObject);
-
-% Determine the which btns should be enabled
-if numEmVal == 0
-    switchComp({'numEx', 'inputExp', 'inputBg'}, 'off', hObject);
-    return
-else
-    switchComp({'numEx'}, 'on', hObject);
-    if checkTagNum('numEx') ~= 0
-        switchComp({'inputExp', 'inputBg'}, 'on', hObject);
-    end
-end
-
-    
-% Update data
-data.numEmVal = numEmVal;
-guidata(hObject,data);
-
-
-% --- Executes during object creation, after setting all properties.
-function numEm_CreateFcn(hObject, eventdata, handles)
-% hObject    handle to numEx (see GCBO)
-% eventdata  reserved - to be defined in a future version of MATLAB
-% handles    empty - handles not created until after all CreateFcns called
-
-% Hint: edit controls usually have a white background on Windows.
-%       See ISPC and COMPUTER.
-if ispc && isequal(get(hObject,'BackgroundColor'), get(0,'defaultUicontrolBackgroundColor'))
-    set(hObject,'BackgroundColor','white');
-end
-
-
 % --- Helper function ---
 function n = getNum(hObject)
 % Get the number from edit box and check its validity
@@ -402,12 +309,12 @@ function numIter_Callback(hObject, eventdata, handles)
 data = guidata(hObject);
 
 % Store the data
-numIter = getNum(hObject);
-if numIter == 0
+numIterVal = getNum(hObject);
+if numIterVal == 0
     switchComp({'numMaxFac', 'pftest'}, 'off', hObject);
     return
 else
-    data.numIter = numIter;
+    data.numIterVal = numIterVal;
     switchComp({'numMaxFac'}, 'on', hObject);
     if checkTagNum('numMaxFac') ~= 0 && isfield(data, 'input') && data.input == 1
         switchComp({'pftest'}, 'on', hObject);
@@ -442,12 +349,12 @@ function numMaxFac_Callback(hObject, eventdata, handles)
 data = guidata(hObject);
 
 % Store the data
-numMaxFac = getNum(hObject);
-if numMaxFac == 0
+numMaxFacVal = getNum(hObject);
+if numMaxFacVal == 0
     switchComp({'numIter', 'pftest'}, 'off', hObject);
     return
 else
-    data.numMaxFac = numMaxFac;
+    data.numMaxFacVal = numMaxFacVal;
     switchComp({'numIter'}, 'on', hObject);
     if checkTagNum('numIter') ~= 0 && isfield(data, 'input') && data.input == 1
         switchComp({'pftest'}, 'on', hObject);
@@ -480,9 +387,16 @@ function pftest_Callback(hObject, eventdata, handles)
 data = guidata(hObject);
 
 % pftest
-[ssX,Corco,It] = pftest(data.numIter, data.normEEM.X, data.numMaxFac, ...
+[ssX,Corco,It] = pftest(data.numIterVal, data.normEEM.X, data.numMaxFacVal, ...
     [0 0 0 0 NaN]);
-movegui(gcf, 'center');
+
+tHandle = gcf;
+movegui(tHandle, 'center');
+
+% Get a success signal
+msg = sprintf('Test completed! Close Images?');
+waitfor(msgbox(msg));
+close(tHandle);
 
 
 % --- Executes on button press in plotPeak.
@@ -565,7 +479,7 @@ function decompose_Callback(hObject, eventdata, handles)
 data = guidata(hObject);
 
 % Decomposition
-[factsCP] = parafac(data.normEEM.X, data.numFac, [0 0 0 0 NaN]);
+[factsCP] = parafac(data.normEEM.X, data.numFacVal, [0 0 0 0 NaN]);
 
 % Store data
 data.factsCP = factsCP;
@@ -618,13 +532,13 @@ function numFac_Callback(hObject, eventdata, handles)
 data = guidata(hObject);
 
 % Store the data
-numFac = getNum(hObject);
-if numFac == 0
+numFacVal = getNum(hObject);
+if numFacVal == 0
     switchComp({'decompose', 'plotCompContour', 'plotCompPeak'}, 'off', hObject);
     % Wrong number, must re-do the decomposition
     data.decompose = 0;
 else
-    data.numFac = numFac;
+    data.numFacVal = numFacVal;
     switchComp({'decompose'}, 'on', hObject);
     if data.decompose == 1
         switchComp({'plotCompContour', 'plotCompPeak'}, 'on', hObject);
@@ -709,6 +623,7 @@ guidata(hObject, data);
 
 % Gain focus
 uicontrol(hObject);
+
 
 % --- Executes on button press in plotCompPeak.
 function plotCompPeak_Callback(hObject, eventdata, handles)

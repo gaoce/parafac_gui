@@ -24,7 +24,7 @@ A GUI to conduct PARAFAC for spectroscopy data.
       `lib/DOMFLour/nway`
   5. Fill out the other information, and click `Package`. The app should be in
      `dist` folder.
-  6. Run `test` for unit testing.
+  6. Use `runtest.m` for unit testing.
 
 4. Also for developers
   * It is **really** easy to get confused with Em and Ex, so I follow the rule that

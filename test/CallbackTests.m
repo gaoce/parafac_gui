@@ -1,14 +1,17 @@
 %% Test Class Definition
-classdef Callbacks < matlab.unittest.TestCase
+classdef CallbackTests < matlab.unittest.TestCase
     properties
         hObject
+        guiData
     end
     
     methods(TestClassSetup)
         function createFigure(testCase)
             % App Graph Handle
             testCase.hObject = main();
-            
+        end
+        
+        function prepareData(testCase)
             % Import tensor
             fileNamesExp = {'2014-06-16 NA H2O2 5A.txt', ...
                 '2014-06-16 NA H2O2 5B.txt',...
@@ -40,7 +43,13 @@ classdef Callbacks < matlab.unittest.TestCase
             data.factsCP = factsCP;
             
             % Update data
-            guidata(testCase.hObject, data);
+            testCase.guiData = data;
+        end
+    end
+    
+    methods(TestMethodSetup)
+        function updateData(testCase)
+            guidata(testCase.hObject, testCase.guiData);
         end
     end
     

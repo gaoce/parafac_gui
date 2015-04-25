@@ -11,7 +11,7 @@ end
 
 % Construct TestSuite
 import matlab.unittest.TestSuite;
-testCases = [Callbacks];
+testCases = [CallbackTests];
 
 % Run the test
 result = run(testCases)

@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <deployment-project plugin="plugin.apptool" plugin-version="1.0">
-  <configuration target="target.mlapps" target-name="Package App" name="PARAFAC" location="C:\workspace\matlab\parafac_gui" file="C:\workspace\matlab\parafac_gui\PARAFAC.prj" build-checksum="3672728979">
+  <configuration target="target.mlapps" target-name="Package App" name="PARAFAC" location="C:\workspace\matlab\parafac_gui" file="C:\workspace\matlab\parafac_gui\PARAFAC.prj" build-checksum="675224682">
     <param.appname>PARAFAC</param.appname>
     <param.authnamewatermark>Ce Gao</param.authnamewatermark>
     <param.email />
@@ -9,16 +9,16 @@
     <param.summary>A GUI to conduct PARAFAC.</param.summary>
     <param.description>A GUI application for PARAFAC that can be installed in MATLAB. This app will help decompose fluorescence excitation–emission matrix (EEM) spectroscopy data and export corresponding plots.</param.description>
     <param.screenshot>${PROJECT_ROOT}\screenshot.png</param.screenshot>
-    <param.version>4.0</param.version>
+    <param.version>4.1</param.version>
     <param.products.name>
-      <item>Image Processing Toolbox</item>
-      <item>MATLAB</item>
       <item>Statistics Toolbox</item>
+      <item>MATLAB</item>
+      <item>Image Processing Toolbox</item>
     </param.products.name>
     <param.products.id>
-      <item>17</item>
-      <item>1</item>
       <item>19</item>
+      <item>1</item>
+      <item>17</item>
     </param.products.id>
     <param.products.version>
       <item>8.2</item>
@@ -85,11 +85,8 @@
       <file>${PROJECT_ROOT}\src\switchComp.m</file>
     </fileset.depfun>
     <fileset.resources>
-      <file>${PROJECT_ROOT}\lib\DOMFluor\nway\def.mat</file>
       <file>${PROJECT_ROOT}\lib\DOMFluor\nway\noptiopf.mat</file>
       <file>${PROJECT_ROOT}\lib\DOMFluor\nway\noptiot3.mat</file>
-      <file>${PROJECT_ROOT}\lib\DOMFluor\nway\temp.mat</file>
-      <file>${PROJECT_ROOT}\lib\DOMFluor\nway\tuck.mat</file>
     </fileset.resources>
     <fileset.package />
     <build-deliverables>

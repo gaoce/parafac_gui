@@ -20,7 +20,8 @@ A GUI to conduct PARAFAC for spectroscopy data.
   2. In the upper left corner, add `main.m` as main file
   3. Click `Refresh` in `Files included through analysis` section
   4. In `Shared resources and helper files` section, add the following files
-    * .mat files in nway toolbox inside `lib/DOMFLour`
+    * noptiopf.mat and noptiopf3.mat files in nway toolbox inside
+      `lib/DOMFLour/nway`
   5. Fill out the other information, and click `Package`. The app should be in
      `dist` folder.
   6. Run `test` for unit testing.

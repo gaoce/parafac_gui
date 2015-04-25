@@ -60,6 +60,9 @@ for i=1:normEEM.nSample
     movegui(fh, 'center');
     set(fh, 'Visible', 'on');
     
-    % Export figure
-    plt.export([outPath,'/', normEEM.Sample{i},'.pdf']);
+    % Export fig
+    datestr = clock;
+    fileName = sprintf('%s/contour_%4d-%02d-%02d_%02d-%02d__%s.pdf',outPath, ...
+        datestr(1:5), normEEM.Sample{i});
+    plt.export(fileName);
 end

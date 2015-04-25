@@ -37,8 +37,8 @@ set(fh, 'Visible', 'on');
 
 %% Export figure
 datestr = clock;
-baseFileName = sprintf('%s/intensity_Em_%d_Ex_%d_%4d-%02d-%02d_%02d-%02d', ...
-    outPath, realPeakEm, realPeakEx, datestr(1:5));
+baseFileName = sprintf('%s/intensity_%4d-%02d-%02d_%02d-%02d__Em_%d_Ex_%d', ...
+    outPath, datestr(1:5), realPeakEm, realPeakEx);
 plt.export([baseFileName, '.pdf']);
 
 %% Export data file

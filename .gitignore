@@ -8,5 +8,6 @@ result*/
 # Distribution
 dist/
 
-# Temporary mat file
+# Temporary file
 temp.mat
+*.temp

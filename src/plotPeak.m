@@ -22,7 +22,8 @@ set(fh,'color','w','Position',[50 50 600 600]);
 
 % Get Plot object early on
 plt = Plot();
-    
+
+% Plot the bar chart
 bar(intensity);
 
 xlim([0 normEEM.nSample+1]);
@@ -34,6 +35,17 @@ title(['Em: ', num2str(realPeakEm), ', Ex: ', num2str(realPeakEx)]);
 movegui(fh, 'center');
 set(fh, 'Visible', 'on');
 
-% Export figure
-fileName = sprintf('%s/intensity_Em_%d_Ex_%d.pdf', outPath, realPeakEm, realPeakEx);
-plt.export(fileName);
+%% Export figure
+datestr = clock;
+baseFileName = sprintf('%s/intensity_Em_%d_Ex_%d_%4d-%02d-%02d_%02d-%02d', ...
+    outPath, realPeakEm, realPeakEx, datestr(1:5));
+plt.export([baseFileName, '.pdf']);
+
+%% Export data file
+fid = fopen([baseFileName, '.csv'], 'w');
+% Format string of header line
+headerFmt = ['Em,Ex,', repmat('%s,', 1, normEEM.nSample-1), '%s\n'];
+contentFmt = ['%d,%d,', repmat('%f,', 1, normEEM.nSample-1), '%f\n'];
+fprintf(fid, headerFmt, normEEM.Sample{:});
+fprintf(fid, contentFmt, realPeakEm, realPeakEx, intensity(:));
+fclose(fid);

@@ -22,7 +22,7 @@ function varargout = main(varargin)
 
 % Edit the above text to modify the response to help main
 
-% Last Modified by GUIDE v2.5 22-Apr-2015 21:50:30
+% Last Modified by GUIDE v2.5 11-Sep-2015 22:33:20
 
 % Begin initialization code - DO NOT EDIT
 gui_Singleton = 1;
@@ -490,7 +490,8 @@ data.decompose = 1;
 guidata(hObject,data);
 
 % Enable plotting
-switchComp({'plotCompContour', 'plotCompPeak'}, 'on', hObject);
+switchComp({'plotCompContour', 'plotCompPeak', 'exportData'}, ...
+    'on', hObject);
 
 msgbox('Decomposition completed!');
 
@@ -714,3 +715,66 @@ function call_unused()
 % pftest is used in evalc, which could not be analyzed by app packaging sys.    
     pftest;
     parafac;
+
+
+% --- Executes on button press in exportData.
+function exportData_Callback(hObject, eventdata, handles)
+% hObject    handle to exportData (see GCBO)
+% eventdata  reserved - to be defined in a future version of MATLAB
+% handles    structure with handles and user data (see GUIDATA)
+
+% Get data
+data = guidata(hObject);
+
+% Alias
+factsCP = data.factsCP;
+
+% Get number of components
+numComp = size(data.factsCP{1}, 2);
+
+% Get last opened location
+if ~isfield(data, 'lastPlotPath')
+    data.lastPlotPath = '.';
+end
+lastPlotPath = data.lastPlotPath;
+
+% Get output dir
+outPath = uigetdir(lastPlotPath, 'Selection location');
+if outPath == 0
+    waitfor(msgbox('Invalid path!'));
+    return
+end
+
+% Update lastPath
+data.lastPlotPath = outPath;
+EEM = data.expEEM;
+
+for i = 1:numComp
+    % Create dir if not exists
+    newDir = ['comp', num2str(i)];
+    if exist([outPath,'/', newDir], 'dir') ~= 7
+        mkdir(outPath, newDir);
+    end
+    
+    % Get tensor data
+    facs = cell(1, 3);
+    for j = 1:3
+        facs{j} = data.factsCP{j}(:, i);
+    end
+    
+    EEM.X = nmodel(facs);
+    exportComp(EEM, [outPath,'/', newDir]);
+end
+
+
+uicontrol(hObject);
+
+% Get a success signal
+msg = sprintf('Data export completed!');
+waitfor(msgbox(msg));
+
+% Update
+guidata(hObject, data);
+
+% Gain focus
+uicontrol(hObject);

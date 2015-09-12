@@ -1,36 +1,37 @@
-<?xml version="1.0" encoding="UTF-8"?>
 <deployment-project plugin="plugin.apptool" plugin-version="1.0">
-  <configuration target="target.mlapps" target-name="Package App" name="PARAFAC" location="C:\workspace\matlab\parafac_gui" file="C:\workspace\matlab\parafac_gui\PARAFAC.prj" build-checksum="675224682">
+  <configuration build-checksum="2870318682" file="C:\workspace\matlab\parafac_gui\PARAFAC.prj" location="C:\workspace\matlab\parafac_gui" name="PARAFAC" target="target.mlapps" target-name="Package App">
     <param.appname>PARAFAC</param.appname>
     <param.authnamewatermark>Ce Gao</param.authnamewatermark>
     <param.email />
     <param.company />
     <param.icon>${PROJECT_ROOT}\PARAFAC_24.png</param.icon>
+    <param.icons />
     <param.summary>A GUI to conduct PARAFAC.</param.summary>
     <param.description>A GUI application for PARAFAC that can be installed in MATLAB. This app will help decompose fluorescence excitation–emission matrix (EEM) spectroscopy data and export corresponding plots.</param.description>
     <param.screenshot>${PROJECT_ROOT}\screenshot.png</param.screenshot>
-    <param.version>4.1</param.version>
+    <param.version>4.2</param.version>
     <param.products.name>
-      <item>Statistics Toolbox</item>
-      <item>MATLAB</item>
       <item>Image Processing Toolbox</item>
+      <item>MATLAB</item>
+      <item>Statistics and Machine Learning Toolbox</item>
     </param.products.name>
     <param.products.id>
-      <item>19</item>
-      <item>1</item>
-      <item>17</item>
+      <item>'17'</item>
+      <item>'1'</item>
+      <item>'19'</item>
     </param.products.id>
     <param.products.version>
-      <item>8.2</item>
-      <item>8.1</item>
-      <item>8.2</item>
+      <item>9.2</item>
+      <item>8.5</item>
+      <item>10.0</item>
     </param.products.version>
     <param.platforms />
     <param.output>${PROJECT_ROOT}\dist\PARAFAC.mlappinstall</param.output>
-    <param.guid>3d41567f-6000-40d2-abf3-a06272df7f40</param.guid>
+    <param.guid>c02c1613-5115-4b31-9713-f0a212aedea4</param.guid>
     <unset>
       <param.email />
       <param.company />
+      <param.icons />
       <param.platforms />
     </unset>
     <fileset.main>
@@ -59,7 +60,6 @@
       <file>${PROJECT_ROOT}\lib\DOMFluor\nway\ncosine.m</file>
       <file>${PROJECT_ROOT}\lib\DOMFluor\nway\neye.m</file>
       <file>${PROJECT_ROOT}\lib\DOMFluor\nway\nident.m</file>
-      <file>${PROJECT_ROOT}\lib\DOMFluor\nway\nmodel.m</file>
       <file>${PROJECT_ROOT}\lib\DOMFluor\nway\nonneg.m</file>
       <file>${PROJECT_ROOT}\lib\DOMFluor\nway\normit.m</file>
       <file>${PROJECT_ROOT}\lib\DOMFluor\nway\nsetdiff.m</file>
@@ -78,6 +78,8 @@
       <file>${PROJECT_ROOT}\lib\plotPub\Plot.m</file>
       <file>${PROJECT_ROOT}\main.fig</file>
       <file>${PROJECT_ROOT}\src\buildTensor.m</file>
+      <file>${PROJECT_ROOT}\src\exportComp.m</file>
+      <file>${PROJECT_ROOT}\src\nmodel.m</file>
       <file>${PROJECT_ROOT}\src\normEEM.m</file>
       <file>${PROJECT_ROOT}\src\plotContour.m</file>
       <file>${PROJECT_ROOT}\src\plotPeak.m</file>
@@ -90,14 +92,37 @@
     </fileset.resources>
     <fileset.package />
     <build-deliverables>
-      <file name="PARAFAC.mlappinstall" location="${PROJECT_ROOT}\dist" optional="false">C:\workspace\matlab\parafac_gui\dist\PARAFAC.mlappinstall</file>
+      <file location="${PROJECT_ROOT}\dist" name="PARAFAC.mlappinstall" optional="false">C:\workspace\matlab\parafac_gui\dist\PARAFAC.mlappinstall</file>
     </build-deliverables>
     <workflow />
     <matlab>
-      <root>C:\Program Files\MATLAB\R2013a</root>
+      <root>C:\Program Files\MATLAB\R2015a</root>
       <toolboxes>
+        <toolbox name="matlabhdlcoder" />
         <toolbox name="fixedpoint" />
+        <toolbox name="embeddedcoder" />
+        <toolbox name="matlabcoder" />
       </toolboxes>
+      <toolbox>
+        <matlabhdlcoder>
+          <enabled>true</enabled>
+        </matlabhdlcoder>
+      </toolbox>
+      <toolbox>
+        <fixedpoint>
+          <enabled>true</enabled>
+        </fixedpoint>
+      </toolbox>
+      <toolbox>
+        <embeddedcoder>
+          <enabled>true</enabled>
+        </embeddedcoder>
+      </toolbox>
+      <toolbox>
+        <matlabcoder>
+          <enabled>true</enabled>
+        </matlabcoder>
+      </toolbox>
     </matlab>
     <platform>
       <unix>false</unix>
@@ -116,4 +141,3 @@
     </platform>
   </configuration>
 </deployment-project>
-
